@@ -1,0 +1,26 @@
+body{
+    background-color: #fffbf5;
+}
+
+h1, h2, h3, a{
+    color: #4f3302 !important;
+}
+
+.container{
+    background-color: none;
+}
+.navbar{
+    background-color: #FEF3E2 !important;
+}
+
+.btn{
+    background-color: #FFB22C ;
+    border-color: #FA812F;
+    color: #4f3302;
+}
+
+.btn:hover{
+    background-color: #ffd07e ;
+    border-color: #FA812F;
+    color: #4f3302;
+}
