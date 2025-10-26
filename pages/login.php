@@ -43,16 +43,21 @@
     <h1 class="h3 fw-bold mb-1">RD Foto Estudio</h1>
     <p class="text-muted mb-4">Inicia sesión para continuar</p>
 
+    <!-- 
+    email
+    password
+    -->
+
     <!-- Formulario -->
-    <form action="./login.html" method="POST" class="text-start">
+    <form action="../backend/comprobar_login.php" method="POST" class="text-start">
       <div class="mb-3">
         <label for="email" class="form-label">Correo electrónico</label>
-        <input type="email" id="email" name="email" class="form-control" required placeholder="example@server.com">
+        <input type="email" id="email" name="email" class="form-control" placeholder="example@server.com">
       </div>
 
       <div class="mb-3">
         <label for="password" class="form-label">Contraseña</label>
-        <input type="password" id="password" name="password" class="form-control" required placeholder="********">
+        <input type="password" id="password" name="password" class="form-control" placeholder="********">
       </div>
 
       <div class="d-flex justify-content-between align-items-center mb-4">
@@ -60,13 +65,10 @@
           <input class="form-check-input" type="checkbox" id="remember">
           <label class="form-check-label" for="remember">Recordarme</label>
         </div>
-        <a href="#" class="text text-decoration-none small">¿Olvidaste tu contraseña?</a>
       </div>
 
       <div class="d-grid">
-        <a href="./arCliente.html" class="btn btn-green text-white fw-semibold py-2">
-          Iniciar sesión
-        </a>
+        <button type="submit" class="btn text-white fw-semibold py-2">Iniciar sesión</button>
       </div>
     </form>
 
@@ -75,7 +77,7 @@
 
     <p class="text-muted small mb-0">
       ¿No tienes cuenta?
-      <a href="./createCount.html" class="text text-decoration-none fw-semibold">Regístrate aquí</a>
+      <a href="./createCount.php" class="text text-decoration-none fw-semibold">Regístrate aquí</a>
     </p>
   </div>
 

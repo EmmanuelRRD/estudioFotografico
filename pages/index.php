@@ -28,8 +28,7 @@
                     <li class="nav-item"><a class="nav-link" href="#impact">Impacto</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
                     <li class="nav-item d-none d-sm-block">
-                        <button onclick="window.location.href='login.html'"
-                            class="btn btn-outline-secondary btn-sm">Iniciar sesión</button>
+                        <a href="./login.php" class="btn btn-outline-secondary btn-sm">Iniciar sesión</a>
                     </li>
                 </ul>
             </div>

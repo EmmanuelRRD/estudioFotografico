@@ -14,13 +14,13 @@ h1, h2, h3, a{
 }
 
 .btn{
-    background-color: #FFB22C ;
-    border-color: #FA812F;
-    color: #4f3302;
+    background-color: #FFB22C !important;
+    border-color: #FA812F !important;
+    color: #4f3302 !important;
 }
 
 .btn:hover{
-    background-color: #ffd07e ;
-    border-color: #FA812F;
-    color: #4f3302;
+    background-color: #ffd07e !important;
+    border-color: #FA812F !important;
+    color: #4f3302 !important;
 }
