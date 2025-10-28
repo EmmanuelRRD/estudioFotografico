@@ -21,8 +21,11 @@
             return $res;
         }
 
-        //------------ Cambios -----------
-
+        //------------ Eliminar -----------
+        public function eliminarRegistro($key,$id,$tabla){
+            $sql = "DELETE FROM $tabla WHERE $key='$id'";
+            return mysqli_query($this-> conexion->getConexion(),$sql);
+        }
 
         //------------ Consultas -----------
         public function mostrar($tabla){
@@ -34,6 +37,9 @@
 
             return $datos;
         }
+
+        //------------ Eliminar -----------
+        
     }
 
 ?>

@@ -49,7 +49,7 @@
     -->
 
     <!-- Formulario -->
-    <form action="../backend/comprobar_login.php" method="POST" class="text-start">
+    <form action="../backend/controllers/validar_usuario.php" method="POST" class="text-start">
       <div class="mb-3">
         <label for="email" class="form-label">Correo electrónico</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="example@server.com">

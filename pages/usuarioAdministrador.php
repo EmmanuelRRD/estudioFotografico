@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!$_SESSION['usuario_autenticado']){
+    header("location: login.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +16,10 @@
     <link rel="icon" href="../assets/images/1icon (3).png" type="image/png">
     <link rel="stylesheet" href="../assets/styles/style.css">
     <title>Cliente</title>
+    <!-- 
+    implementando sesiones
+    -->
+
 </head>
 
 <body>
@@ -64,7 +75,7 @@
         </div>
 
         <!-- Tabla de productos -->
-        <div class="table-responsive shadow-sm bg-white rounded-3">
+        <div class="table-responsive shadow-sm bg-white rounded-3" style="max-height: 65vh; overflow-y: auto;">
             <table class="table table-hover align-middle mb-0" id="tabla-contenido">
 
             </table>
@@ -75,7 +86,8 @@
     <!--========================== Tablas de contenido ======================= 
     <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6045.3003145248895!2d-73.9884657!3d40.7477229!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9ac1f1b85%3A0x7e33d1c0e7af3be4!2zMzUwIDV0aCBBdmUsIE5ldyBZb3JrLCBOWSAxMDExOCwg0KHQqNCQ!5e0!3m2!1sru!2sru!4v1689597362021!5m2!1sen!2sen" class="mt-5 text-center" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     -->
-
+    
+    <!-- Para editar -->
     <div id="resultado" class="mt-3"></div>
 
 
@@ -111,11 +123,13 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row g-3" id="contenidoEditar">
+                    <form id="newInfo">
+                        <div class="row g-3" id="contenidoEditar">
 
                     </div>
+                    </form>
                     <button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-warning text-white mt-3" onclick="metodoGuardaCambios('el id del producto')">Guardar cambios</button>
+                    <button class="btn btn-warning text-white mt-3" id="btnActualizar">Guardar cambios</button>
 
                 </div>
             </div>
@@ -123,6 +137,8 @@
     </div>
 
     <script src="../assets/scripts/mostrar_tablas.js"></script>
+    <script src="../assets/scripts/enviar_actualizacion.js"></script>
+    <script src="../assets/scripts/eliminar_dato.js"></script>
 </body>
 
 </html>
