@@ -94,7 +94,7 @@ if(!$_SESSION['usuario_autenticado']){
 
     <!--========================== Aqui empiezan los Modales ======================= -->
 
-    <!-- Modal: Agregar producto -->
+    <!-- Modal: Agregar  -->
     <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -103,11 +103,13 @@ if(!$_SESSION['usuario_autenticado']){
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
+                    <form id="addInfo">
                     <div class="row g-3" id="contenidoAgregar">
 
                     </div>
+                    </form>
                     <button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-warning text-white mt-3" onclick="metodoGuardaCambios('el id del producto')">Agregar</button>
+                    <button class="btn btn-warning text-white mt-3" id="btn_creador" onclick="">Agregar</button>
 
                 </div>
             </div>
@@ -139,6 +141,7 @@ if(!$_SESSION['usuario_autenticado']){
     <script src="../assets/scripts/mostrar_tablas.js"></script>
     <script src="../assets/scripts/enviar_actualizacion.js"></script>
     <script src="../assets/scripts/eliminar_dato.js"></script>
+    <script src="../assets/scripts/crear.js"></script>
 </body>
 
 </html>

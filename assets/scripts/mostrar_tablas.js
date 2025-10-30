@@ -14,8 +14,10 @@ function enviar(tabla) {
                 let titulo = document.getElementById('txtTableName');
                 let modalEditar = document.getElementById('contenidoEditar');
                 let modalAgregar = document.getElementById('contenidoAgregar');
+                let btn_agregar = document.getElementById('btn_creador');
 
                 let rescatar_tabla = tabla;
+                btn_agregar.onclick = () => crear(rescatar_tabla);
 
                 let firstRow = data[0];                // primera fila
                 let rescatar_key = Object.keys(firstRow)[0]; // nombre de la primera columna

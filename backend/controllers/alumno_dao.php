@@ -14,14 +14,25 @@ class AlumnoDAO
     //=================== Metodos abcc (CRUD) =================
 
     //------------- Altas ----------
-    public function agregarAlumno($id, $name, $primerAp, $segundoAp, $fechaNac, $semestre, $carrera)
-    {
-        $sql = "INSERT INTO alumnos VALUES('$id','$name','$primerAp','$segundoAp','$fechaNac','$semestre','$carrera')";
+    public function agregar($tabla, $valores){
+
+        $campos = array_keys($valores);
+        $valoresEscapados = array_map(fn($v) => "'" . addslashes($v) . "'", array_values($valores));
+
+        $columnas = implode(", ", $campos);
+        $valores_str = implode(", ", $valoresEscapados);
+
+        $sql = "INSERT INTO $tabla ($columnas) VALUES ($valores_str)";
 
         $res = mysqli_query($this->conexion->getConexion(), $sql);
 
-        return $res;
+        if ($res) {
+            echo "Alumno agregado correctamente.";
+        } else {
+            echo "Error al agregar alumno: " . mysqli_error($this->conexion->getConexion());
+        }
     }
+
 
     //------------ Eliminar -----------
     public function eliminarRegistro($key, $id, $tabla)
