@@ -1,5 +1,7 @@
 
-function enviar_actualizacion(id) {
+function enviar_actualizacion(key, id, tabla) {
+
+
     console.log("identificador: " + id);
     const form = document.getElementById('newInfo');
     const formData = new FormData(form);
@@ -9,28 +11,47 @@ function enviar_actualizacion(id) {
         datos[clave] = valor;
     });
 
-    console.table(datos); // 👈 mucho más claro
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditar'));
+    modal.hide();
+
+    fetch("../backend/controllers/procesar_cambios.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            datos: datos,
+            tabla: tabla,
+            id: id,
+            key: key
+        })
+    })
+        .then(res => res.text())
+        .then(data => {
+            alert(data);
+            enviar(tabla);
+
+        })
+        .catch(err => console.error("Error:", err));
+
 }
 
-
-
-//si creo los botones a la hora de los datos puedo paras los parametros del id de una vez para las ediciones y eliminaciones
-function llenarFormularioEditar(row, id) {
+function llenarFormularioEditar(row, key, id, tabla) {
     const form = document.getElementById('contenidoEditar');
 
-    // Limpiamos el formulario antes de rellenar
     form.querySelectorAll('input').forEach(input => {
         const campo = input.name;
+
         let btnConfirmar = document.getElementById('btnActualizar');
 
-        btnConfirmar.onclick = () => enviar_actualizacion(id);
-
+        btnConfirmar.onclick = () => enviar_actualizacion(key, id, tabla);
         if (campo in row) {
             input.value = row[campo];
         } else {
             input.value = '';
         }
+
+        //Mandar los datos
     });
 
-    console.log("Formulario rellenado con:", row);
 }

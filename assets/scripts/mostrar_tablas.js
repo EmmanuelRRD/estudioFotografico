@@ -1,16 +1,15 @@
 function enviar(tabla) {
 
-
-    console.log("Tabla actual:", tabla);
+    const botonAg = document.getElementById("btn-agregar");
     //short url
     fetch(`../backend/controllers/procesar_consultas.php?tabla=${tabla}`)
         .then(res => res.json())
         .then(data => {
+            botonAg.style.display = "block";
 
             if (Array.isArray(data) && data.length > 0) {
                 console.log("Número de registros:", data.length);
                 // Aquí procesas los datos normalmente
-
 
                 let titulo = document.getElementById('txtTableName');
                 let modalEditar = document.getElementById('contenidoEditar');
@@ -20,8 +19,6 @@ function enviar(tabla) {
 
                 let firstRow = data[0];                // primera fila
                 let rescatar_key = Object.keys(firstRow)[0]; // nombre de la primera columna
-                console.log(rescatar_key); // "id"
-
 
                 titulo.innerHTML = tabla.toUpperCase();
 
@@ -64,7 +61,6 @@ function enviar(tabla) {
                 thead.appendChild(trHead);
                 tablaElement.appendChild(thead);
 
-
                 const tbody = document.createElement('tbody');
 
                 data.forEach(row => {
@@ -85,7 +81,7 @@ function enviar(tabla) {
                     const btnEditar = document.createElement('button');
                     btnEditar.className = 'btn btn-primary btn-sm me-1';
                     btnEditar.textContent = '✏️ Editar';
-                    btnEditar.onclick = () => llenarFormularioEditar(row, id);
+                    btnEditar.onclick = () => llenarFormularioEditar(row, rescatar_key, id, rescatar_tabla);
                     btnEditar.idName = 'modalAgregar';
 
                     //agregar el boton de eliminar
@@ -112,5 +108,20 @@ function enviar(tabla) {
                 // Opcional: mostrar mensaje en la tabla o modal
                 document.getElementById('tabla-contenido').innerHTML = "<tr><td colspan='10'>No hay datos</td></tr>";
             }
+        })
+        .catch(error => {
+            alert("Error tabla no encontrada");
+            //#botonAg
+            botonAg.style.display = "none";
+
+            let titulo = document.getElementById('txtTableName');
+            let modalEditar = document.getElementById('contenidoEditar');
+            let modalAgregar = document.getElementById('contenidoAgregar');
+            let tablaElement = document.getElementById('tabla-contenido');
+
+            modalEditar.innerHTML = "";
+            tablaElement.innerHTML = "";//borrar lo anterior
+            modalAgregar.innerHTML = "";//borrar lo anterior
+            titulo.innerHTML = "";//borrar lo anterior
         });
 }

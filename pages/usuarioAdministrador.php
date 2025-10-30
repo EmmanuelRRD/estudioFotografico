@@ -6,7 +6,7 @@ if(!$_SESSION['usuario_autenticado']){
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -69,7 +69,7 @@ if(!$_SESSION['usuario_autenticado']){
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold text" id="txtTableName"> Nombre de la tabla </h2>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAgregar">
+            <button class="btn btn-success" id="btn-agregar" data-bs-toggle="modal" data-bs-target="#modalAgregar">
                 ➕ Agregar
             </button>
         </div>
