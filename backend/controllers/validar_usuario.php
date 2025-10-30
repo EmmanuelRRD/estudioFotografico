@@ -2,30 +2,31 @@
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-//echo $email."<br>";
-//echo $password."<br>";
+include_once('../../database/conexion_bd_usuarios.php');
 
-//Hacer las verificaciones en la BD usuarios
-$conexion = true;
+$con = new ConexionBDUsuarios();
+$conexion = $con->getConexion();
 
-if($conexion){
+if ($conexion) {
 
-    //CIFRADO!!!
 
-    $sql = "select * from usuarios where nombre_usuario = '$email' and password='$password'";
-    //$res = mysqli_query($conexion, $sql);
-    $res = 1;
-    
-    if($res==1){
+    $email_sifrado = sha1($email);
+    $password_sifrafo = sha1($email);
+
+    $sql = "select * from usuarios where Usuario = '$email_sifrado' and Password='$password_sifrafo'";
+    $res = mysqli_query($conexion, $sql);
+
+    if (mysqli_num_rows($res) == 1) {
         session_start();
         $_SESSION['usuario_autenticado'] = true;
         $_SESSION['nombre_usuario'] = 'luke';
 
         header('location: ../../pages/usuarioAdministrador.php');
-    }else{
-        require_once('../../pages/login.php');
+    } else {
+        //require_once('../../pages/login.php');
+        //Mostrar un mensaje
+        echo "no encontrado";
     }
-
 }
 
 /*

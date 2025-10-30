@@ -33,8 +33,48 @@ function enviar(tabla) {
                 thead.classList.add('table-warning');
                 const trHead = document.createElement('tr');
 
-                for (let key in data[0]) {//mostrar solo los campos que se necesitan (Los primeros 4)
+                for (let key in data[0]) {
                     const th = document.createElement('th');
+
+                    // Contenedor
+                    const divCheck = document.createElement('div');
+                    divCheck.className = 'form-check d-flex align-items-center justify-content-center';
+
+                    // Checkbox
+                    const inputCheck = document.createElement('input');
+                    inputCheck.type = 'checkbox';
+                    inputCheck.className = 'form-check-input';
+                    inputCheck.id = `chk-${key}`;
+                    inputCheck.name = 'columnas';
+                    inputCheck.value = key;
+
+                    const label = document.createElement('label');
+                    label.className = 'form-check-label ms-1';
+                    label.setAttribute('for', `chk-${key}`);
+                    label.textContent = key;
+
+                    divCheck.appendChild(inputCheck);
+                    divCheck.appendChild(label);
+                    th.appendChild(divCheck);
+                    trHead.appendChild(th);
+
+                    //Solo permitir uno activo
+                    inputCheck.addEventListener('change', (e) => {
+                        if (e.target.checked) {
+                            // Desmarcar todos los demás
+                            document.querySelectorAll('input[name="columnas"]').forEach(chk => {
+                                if (chk !== e.target) chk.checked = false;
+                            });
+                            console.log("Seleccionado:", e.target.value);
+                            const a = document.getElementById('search_id');
+                            a.value = e.target.value;
+                        } else {
+                            console.log("Ninguno seleccionado");
+                        }
+                    });
+                }
+
+                for (let key in data[0]) {//mostrar solo los campos que se necesitan (Los primeros 4)
                     const cuerpoModal = document.createElement('div');
                     const label = document.createElement('label');
                     const input = document.createElement('input');
@@ -47,13 +87,10 @@ function enviar(tabla) {
                     label.textContent = key;
                     label.className = 'form-label';
 
-                    th.textContent = key;
-
                     cuerpoModal.appendChild(label);
                     cuerpoModal.appendChild(input);
                     modalEditar.appendChild(cuerpoModal);
                     modalAgregar.appendChild(cuerpoModal.cloneNode(true));//duplicar y agregar
-                    trHead.appendChild(th);
                 }
                 let th = document.createElement('th');
 

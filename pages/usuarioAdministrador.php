@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!$_SESSION['usuario_autenticado']){
+if (!$_SESSION['usuario_autenticado']) {
     header("location: login.php");
 }
 ?>
@@ -58,7 +58,10 @@ if(!$_SESSION['usuario_autenticado']){
 
                     </li>
                     <li class="nav-item d-none d-sm-block">
-                        <a href="../pages/index.php" class="btn btn-outline-secondary btn-sm">Cerrar sesión</a>
+                        <form action="../backend/controllers/cerrar_sesion.php">
+                            <button type="submit" class="btn">Cerrar sesion</button>
+                        </form>
+
                     </li>
                 </ul>
             </div>
@@ -69,11 +72,16 @@ if(!$_SESSION['usuario_autenticado']){
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold text" id="txtTableName"> Nombre de la tabla </h2>
+
+            <input class="form-control me-2 w-50" type="search" placeholder="Buscar" aria-label="Search" />
+            <input type="hidden" id="search_id" name="search_id" />
             <button class="btn btn-success" id="btn-agregar" data-bs-toggle="modal" data-bs-target="#modalAgregar">
                 ➕ Agregar
             </button>
         </div>
-
+        <div>
+            Bienvenido <?php echo $_SESSION['nombre_usuario']?>
+        </div>
         <!-- Tabla de productos -->
         <div class="table-responsive shadow-sm bg-white rounded-3" style="max-height: 65vh; overflow-y: auto;">
             <table class="table table-hover align-middle mb-0" id="tabla-contenido">
@@ -81,17 +89,6 @@ if(!$_SESSION['usuario_autenticado']){
             </table>
         </div>
     </div>
-
-    <div id="resultado" class="mt-3"></div>
-    <!--========================== Tablas de contenido ======================= 
-    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6045.3003145248895!2d-73.9884657!3d40.7477229!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9ac1f1b85%3A0x7e33d1c0e7af3be4!2zMzUwIDV0aCBBdmUsIE5ldyBZb3JrLCBOWSAxMDExOCwg0KHQqNCQ!5e0!3m2!1sru!2sru!4v1689597362021!5m2!1sen!2sen" class="mt-5 text-center" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    -->
-    
-    <!-- Para editar -->
-    <div id="resultado" class="mt-3"></div>
-
-
-
     <!--========================== Aqui empiezan los Modales ======================= -->
 
     <!-- Modal: Agregar  -->
@@ -104,9 +101,9 @@ if(!$_SESSION['usuario_autenticado']){
                 </div>
                 <div class="modal-body">
                     <form id="addInfo">
-                    <div class="row g-3" id="contenidoAgregar">
+                        <div class="row g-3" id="contenidoAgregar">
 
-                    </div>
+                        </div>
                     </form>
                     <button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
                     <button class="btn btn-warning text-white mt-3" id="btn_creador" onclick="">Agregar</button>
@@ -128,7 +125,7 @@ if(!$_SESSION['usuario_autenticado']){
                     <form id="newInfo">
                         <div class="row g-3" id="contenidoEditar">
 
-                    </div>
+                        </div>
                     </form>
                     <button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
                     <button class="btn btn-warning text-white mt-3" id="btnActualizar">Guardar cambios</button>

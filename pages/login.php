@@ -52,12 +52,12 @@
     <form action="../backend/controllers/validar_usuario.php" method="POST" class="text-start">
       <div class="mb-3">
         <label for="email" class="form-label">Correo electrónico</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="example@server.com">
+        <input type="text" id="email" name="email" class="form-control" placeholder="example@server.com">
       </div>
 
       <div class="mb-3">
         <label for="password" class="form-label">Contraseña</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="********">
+        <input type="text" id="password" name="password" class="form-control" placeholder="********">
       </div>
 
       <div class="d-flex justify-content-between align-items-center mb-4">
