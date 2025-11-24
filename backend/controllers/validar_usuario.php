@@ -1,41 +1,39 @@
 <?php
-$email = $_POST['email'];
-$password = $_POST['password'];
+include_once('../database/conexion_bd_usuarios.php');
 
-include_once('../../database/conexion_bd_usuarios.php');
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);         
+
+$email = $data['email'];
+$password = $data['password'];
 
 $con = new ConexionBDUsuarios();
 $conexion = $con->getConexion();
 
 if ($conexion) {
 
-
     $email_sifrado = sha1($email);
-    $password_sifrafo = sha1($email);
+    $password_sifrafo = sha1($password);
 
     $sql = "select * from usuarios where Usuario = '$email_sifrado' and Password='$password_sifrafo'";
     $res = mysqli_query($conexion, $sql);
 
     if (mysqli_num_rows($res) == 1) {
-        session_start();
-        $_SESSION['usuario_autenticado'] = true;
-        $_SESSION['nombre_usuario'] = 'luke';
 
-        header('location: ../../pages/usuarioAdministrador.php');
-    } else {
-        //require_once('../../pages/login.php');
-        //Mostrar un mensaje
-        echo "no encontrado";
-    }
+    // Puedes devolver información del usuario si quieres
+    $usuario = mysqli_fetch_assoc($res);
+
+    echo json_encode([
+        "status" => "ok",
+        "message" => "Bienenido",
+        "usuario" => $usuario
+    ]);
+
+} else {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Error en correo o contraseña"
+    ]);
 }
 
-/*
-switch($password){
-    case "1":
-        require_once('../../pages/usuarioCliente.php');
-        break;
-    case "4":
-        require_once('../../pages/usuarioAdministrador.php');
-        break;
 }
-*/

@@ -1,6 +1,6 @@
 <?php
 
-include_once('../../database/conexion_bd_escuela.php');
+include_once('../database/conexion_bd_escuela.php');
 
 class AlumnoDAO
 {
@@ -14,7 +14,8 @@ class AlumnoDAO
     //=================== Metodos abcc (CRUD) =================
 
     //------------- Altas ----------
-    public function agregar($tabla, $valores){
+    public function agregar($tabla, $valores)
+    {
 
         $campos = array_keys($valores);
         $valoresEscapados = array_map(fn($v) => "'" . addslashes($v) . "'", array_values($valores));
@@ -74,5 +75,26 @@ class AlumnoDAO
         } else {
             echo "Error: " . mysqli_error($this->conexion->getConexion());
         }
+    }
+
+    public function actualizarEspecifico($tabla, $key, $id)
+    {
+        // Validar tabla y campo (evita inyección SQL)
+        $tabla = mysqli_real_escape_string($this->conexion->getConexion(), $tabla);
+        $key   = mysqli_real_escape_string($this->conexion->getConexion(), $key);
+        $like = "$id%";
+
+        $sql = "SELECT * FROM $tabla WHERE $key LIKE '$like'";
+
+        $stmt = $this->conexion->getConexion()->prepare($sql);
+
+        $stmt->execute();
+
+        $res = $stmt->get_result();
+        $datos = $res->fetch_all(MYSQLI_ASSOC);
+
+        $stmt->close();
+
+        return $datos;
     }
 }
