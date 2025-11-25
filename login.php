@@ -31,49 +31,49 @@
 
 <body>
 
-    	<section data-bs-version="5.1" class="menu menu2 cid-v0tuSqdwYw" once="menu" id="menu02-1r">
+    <section data-bs-version="5.1" class="menu menu2 cid-v0tuSqdwYw" once="menu" id="menu02-1r">
 
 
-		<nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
-			<div class="container">
-				<div class="navbar-brand">
-					<span class="navbar-logo">
-						<a href="./index.php">
-							<img src="assets/images/logo.png" alt="Mobirise Website Builder" style="height: 3rem;">
-						</a>
-					</span>
-					<span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4"
-							href="./index.php">RD Estudio&nbsp;<br></a></span>
-				</div>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse"
-					data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-					<div class="hamburger">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
-						<li class="nav-item">
-							<a class="nav-link link text-white display-4" href="./index.php#mi_trabajo"
-								aria-expanded="false">Portafolio</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link link text-white display-4" href="./index.php#fotografos">Fotografos</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link link text-white display-4" href="./index.php#donde_encontrarnos">Contactanos</a>
-						</li>
-					</ul>
-					<div class="navbar-buttons mbr-section-btn"><a class="btn btn-success display-4"
-							href="./create_count.php">Crear Cuenta</a></div>
-				</div>
-			</div>
-		</nav>
-	</section>
+        <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+            <div class="container">
+                <div class="navbar-brand">
+                    <span class="navbar-logo">
+                        <a href="./index.php">
+                            <img src="assets/images/logo.png" alt="Mobirise Website Builder" style="height: 3rem;">
+                        </a>
+                    </span>
+                    <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4"
+                            href="./index.php">RD Estudio&nbsp;<br></a></span>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse"
+                    data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                        <li class="nav-item">
+                            <a class="nav-link link text-white display-4" href="./index.php#mi_trabajo"
+                                aria-expanded="false">Portafolio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link text-white display-4" href="./index.php#fotografos">Fotografos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link text-white display-4" href="./index.php#donde_encontrarnos">Contactanos</a>
+                        </li>
+                    </ul>
+                    <div class="navbar-buttons mbr-section-btn"><a class="btn btn-success display-4"
+                            href="./create_count.php">Crear Cuenta</a></div>
+                </div>
+            </div>
+        </nav>
+    </section>
 
 
     <section data-bs-version="5.1" class="form03 cid-v2CSuTPkdr" id="form03-25" style="height: 100VH;">
@@ -87,6 +87,7 @@
 
                     </div>
                     <div class="col-lg-12 mx-auto mbr-form" data-form-type="formoid">
+                        <form action="./backend/controllers/validar_usuario.php" method="post">
                             <div class="dragArea row">
                                 <div class="col-12 form-group mb-3 mb-3 mt-5" data-for="email">
                                     <input type="text" name="email" placeholder="Correo" data-form-field="email"
@@ -98,10 +99,10 @@
                                         id="password">
                                 </div>
                                 <div class="col-12 form-group text-center">
-                                    <div class="g-recaptcha" data-sitekey="6Lf9pRcsAAAAAO57GqyawvgdTj1QMb5HE3TlKMwL" ></div>
+                                    <div class="g-recaptcha" data-sitekey="6Lf9pRcsAAAAAO57GqyawvgdTj1QMb5HE3TlKMwL"></div>
                                 </div>
                                 <div class="col-auto align-center mbr-section-btn"><button type="submit"
-                                        class="w-100 btn btn btn-success display-4 display-7" onclick="login()">Acceder</button></div>
+                                        class="w-100 btn btn btn-success display-4 display-7">Acceder</button></div>
                                 <br>
                                 <div class="col-12 form-group mt-3 align-center">
 
@@ -112,6 +113,7 @@
                                     </p>
                                 </div>
                             </div>
+                        </form>
                     </div>
 
                 </div>

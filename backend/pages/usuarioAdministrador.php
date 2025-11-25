@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!$_SESSION['usuario_autenticado']) {
+    header("location: ../../login.php");
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -72,7 +79,10 @@
 						</li>
 						<li class="nav-item">
 					</ul>
-					<div class="navbar-buttons mbr-section-btn"><a class="btn btn-success display-4" href="../../login.html">Cerrar sesión</a></div>
+					<form action="../controllers/cerrar_sesion.php">
+							<div class="navbar-buttons mbr-section-btn"><button type="submit" class="btn btn-success display-4" >Cerrar sesión</button></div>
+                        </form>
+					
 				</div>
 			</div>
 		</nav>
@@ -96,7 +106,7 @@
             </button>
         </div>
         <div>
-            <?php //echo "Bienvenido ".$_SESSION['nombre_usuario']
+            <?php echo "Bienvenido ".$_SESSION['nombre_usuario']
             ?>
         </div>
         <!-- Tabla de productos -->

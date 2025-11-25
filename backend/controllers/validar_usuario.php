@@ -1,39 +1,57 @@
 <?php
 include_once('../database/conexion_bd_usuarios.php');
 
-$input = file_get_contents("php://input");
-$data = json_decode($input, true);         
+$email = $_POST['email'] ?? null;
+$password = $_POST['password'] ?? null;
 
-$email = $data['email'];
-$password = $data['password'];
+if (!$email || !$password) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Faltan datos"
+    ]);
+    exit;
+}
 
 $con = new ConexionBDUsuarios();
 $conexion = $con->getConexion();
 
 if ($conexion) {
 
-    $email_sifrado = sha1($email);
-    $password_sifrafo = sha1($password);
+    // Convertimos como están guardados en BD (SHA1)
+    $email_hash = sha1($email);
+    $pass_hash  = sha1($password);
 
-    $sql = "select * from usuarios where Usuario = '$email_sifrado' and Password='$password_sifrafo'";
-    $res = mysqli_query($conexion, $sql);
+    $sql = "SELECT * FROM usuarios WHERE Usuario = ? AND Password = ?";
+    $stmt = mysqli_prepare($conexion, $sql);
+    mysqli_stmt_bind_param($stmt, "ss", $email_hash, $pass_hash);
+    mysqli_stmt_execute($stmt);
 
-    if (mysqli_num_rows($res) == 1) {
+    $resultado = mysqli_stmt_get_result($stmt);
 
-    // Puedes devolver información del usuario si quieres
-    $usuario = mysqli_fetch_assoc($res);
+    if ($resultado && mysqli_num_rows($resultado) === 1) {
 
-    echo json_encode([
-        "status" => "ok",
-        "message" => "Bienenido",
-        "usuario" => $usuario
-    ]);
+        $usuario = mysqli_fetch_assoc($resultado);
 
-} else {
-    echo json_encode([
-        "status" => "error",
-        "message" => "Error en correo o contraseña"
-    ]);
-}
+        session_start();
+        $_SESSION['usuario_autenticado'] = true;
+        //$_SESSION['nombre_usuario'] = $usuario["Usuario"];
+        $_SESSION['nombre_usuario'] = "Emmanuel";
+        header('location: ../pages/usuarioAdministrador.php');
 
+        
+        echo json_encode([
+            "status" => "ok",
+            "message" => "Bienvenido",
+            "usuario" => $usuario
+        ]);
+        
+
+    } else {
+        echo json_encode([
+            "status" => "error",
+            "message" => "Error en correo o contraseña"
+        ]);
+    }
+
+    mysqli_close($conexion);
 }
