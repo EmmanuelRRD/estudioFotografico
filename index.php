@@ -69,7 +69,7 @@
 						</li>
 					</ul>
 					<div class="navbar-buttons mbr-section-btn"><a class="btn btn-success display-4"
-							href="./login.html">Inicia sesión</a></div>
+							href="./login.php">Inicia sesión</a></div>
 				</div>
 			</div>
 		</nav>

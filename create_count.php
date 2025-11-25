@@ -2,7 +2,6 @@
 <html>
 
 <head>
-	<!-- Site made with Mobirise Website Builder v6.1.9, https://mobirise.com -->
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="generator" content="Mobirise v6.1.9, mobirise.com">
@@ -38,12 +37,12 @@
 			<div class="container">
 				<div class="navbar-brand">
 					<span class="navbar-logo">
-						<a href="https://mobiri.se">
+						<a href="./index.php">
 							<img src="assets/images/logo.png" alt="Mobirise Website Builder" style="height: 3rem;">
 						</a>
 					</span>
 					<span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4"
-							href="https://mobiri.se">RD Estudio&nbsp;<br></a></span>
+							href="./index.php">RD Estudio&nbsp;<br></a></span>
 				</div>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse"
 					data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent"
@@ -57,20 +56,8 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					
-					<div class="icons-menu">
-						<a class="iconfont-wrapper" href="https://mobiri.se">
-							<span class="p-2 mbr-iconfont mobi-mbri-phone mobi-mbri"></span>
-						</a>
-						<a class="iconfont-wrapper" href="https://mobiri.se">
-							<span class="p-2 mbr-iconfont mobi-mbri-letter mobi-mbri"></span>
-						</a>
-						<a class="iconfont-wrapper" href="https://mobiri.se">
-							<span class="p-2 mbr-iconfont mobi-mbri-map-pin mobi-mbri"></span>
-						</a>
-
-					</div>
 					<div class="navbar-buttons mbr-section-btn"><a class="btn btn-success display-4"
-							href="./login.html">Inicia sesión</a></div>
+							href="./login.php">Inicia sesión</a></div>
 				</div>
 			</div>
 		</nav>
