@@ -166,7 +166,6 @@
     <script src="../../backend/scripts/eliminar_dato.js"></script>
     <script src="../../backend/scripts/crear.js"></script>
     <script src="../../backend/scripts/consultas.js"></script>
-    <script src="../../backend/scripts/crear_tablas.js"></script>
 
 	<input name="animation" type="hidden">
 </body>

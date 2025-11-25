@@ -1,4 +1,4 @@
-function eliminar(id, key, tabla) {
+function eliminar(id, key, tabla, publicName) {
     console.log("Datos a enviar:", { id, key, tabla });//comentar acabando las pruebas
 
     fetch(`../controllers/procesar_bajas.php`, {
@@ -13,7 +13,7 @@ function eliminar(id, key, tabla) {
         console.log("Respuesta del servidor:", data);
         if (data.trim() === "ok") {
             alert("Registro eliminado correctamente");
-            enviar(tabla); // actualizar la tabla
+            enviar(tabla,publicName); // actualizar la tabla
         } else {
             alert("Error al eliminar el registro");
         }

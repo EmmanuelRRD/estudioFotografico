@@ -1,7 +1,9 @@
-function enviar(tabla,nombrePublicotabla) {
+function enviar(tabla, nombrePublicotabla) {
 
     const botonAg = document.getElementById("btn-agregar");
     //short url
+    console.log(tabla);
+    console.log(nombrePublicotabla);
     fetch(`../controllers/procesar_consultas.php?tabla=${tabla}`)
         .then(res => res.json())
         .then(data => {
