@@ -82,8 +82,7 @@
             <div class="row justify-content-center align-items-center main-row">
                 <div class="col-12 col-lg item-wrapper">
                     <div class="mbr-section-head ">
-                        <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>Inicio
-                                sesión</strong></h3>
+                        <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>Inicio sesión</strong></h3>
 
                     </div>
                     <div class="col-lg-12 mx-auto mbr-form" data-form-type="formoid">
