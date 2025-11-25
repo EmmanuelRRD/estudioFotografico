@@ -16,31 +16,71 @@ class AlumnoDAO
     //------------- Altas ----------
     public function agregar($tabla, $valores)
     {
+        $columnas = implode(", ", array_keys($valores));
+        $placeholders = implode(", ", array_fill(0, count($valores), "?"));
 
-        $campos = array_keys($valores);
-        $valoresEscapados = array_map(fn($v) => "'" . addslashes($v) . "'", array_values($valores));
+        $sql = "INSERT INTO $tabla ($columnas) VALUES ($placeholders)";
+        $stmt = $this->conexion->getConexion()->prepare($sql);
 
-        $columnas = implode(", ", $campos);
-        $valores_str = implode(", ", $valoresEscapados);
+        $tipos = str_repeat("s", count($valores)); // todos string
+        $stmt->bind_param($tipos, ...array_values($valores));
 
-        $sql = "INSERT INTO $tabla ($columnas) VALUES ($valores_str)";
-
-        $res = mysqli_query($this->conexion->getConexion(), $sql);
-
-        if ($res) {
+        if ($stmt->execute()) {
             echo "Alumno agregado correctamente.";
         } else {
             echo "Error al agregar alumno: " . mysqli_error($this->conexion->getConexion());
         }
     }
 
-
     //------------ Eliminar -----------
     public function eliminarRegistro($key, $id, $tabla)
     {
-        $sql = "DELETE FROM $tabla WHERE $key='$id'";
-        return mysqli_query($this->conexion->getConexion(), $sql);
+        // Que sis se puede eliminar
+        $tablasPermitidas = [
+            'estudio',
+            'usuario',
+            'equipo_trabajo',
+            'evento',
+            'material',
+            'material_necesario',
+            'nota',
+            'usuario_equipo'
+        ];
+
+        $keysPermitidos = [
+            'id_estudio',
+            'id_usuario',
+            'id_equipo',
+            'id_evento',
+            'id_material',
+            'id_detalle',
+            'id_nota'
+        ];
+
+        if (!in_array($tabla, $tablasPermitidas)) {
+            throw new Exception("Tabla no permitida");
+        }
+
+        if (!in_array($key, $keysPermitidos)) {
+            throw new Exception("Columna no permitida");
+        }
+
+        // 2) Prepared statement seguro
+        $sql = "DELETE FROM $tabla WHERE $key = ?";
+        $stmt = $this->conexion->getConexion()->prepare($sql);
+
+        if (!$stmt) {
+            throw new Exception("Error al preparar: " . $this->conexion->getConexion()->error);
+        }
+
+        $stmt->bind_param("s", $id);
+
+        // 4) Ejecutar
+        $stmt->execute();
+
+        return $stmt->affected_rows > 0;
     }
+
 
     //------------ Consultas -----------
     public function mostrar($tabla)
@@ -57,27 +97,26 @@ class AlumnoDAO
     //------------ Actualizar -----------
     public function actualizar($key, $id, $tabla, $valores)
     {
-        // Construimos la parte SET del UPDATE
-        $set = [];
-        foreach ($valores as $campo => $valor) {
-            $set[] = "$campo = '" . addslashes($valor) . "'";
-        }
-        $set_str = implode(", ", $set);
+        $set = implode(", ", array_map(fn($k) => "$k = ?", array_keys($valores)));
 
-        // Armamos la sentencia SQL final
-        $sql = "UPDATE $tabla SET $set_str WHERE $key = '" . addslashes($id) . "'";
+        $sql = "UPDATE $tabla SET $set WHERE $key = ?";
+        $stmt = $this->conexion->getConexion()->prepare($sql);
 
-        // Ejecutamos la consulta (si tienes una conexión mysqli)
-        $res = mysqli_query($this->conexion->getConexion(), $sql);
+        $tipos = str_repeat("s", count($valores) + 1);
 
-        if ($res) {
+        $params = array_values($valores);
+        $params[] = $id;
+
+        $stmt->bind_param($tipos, ...$params);
+
+        if ($stmt->execute()) {
             echo "Actualización exitosa";
         } else {
             echo "Error: " . mysqli_error($this->conexion->getConexion());
         }
     }
 
-    public function actualizarEspecifico($tabla, $key, $id)
+    public function mostrarEspecifico($tabla, $key, $id)
     {
         // Validar tabla y campo (evita inyección SQL)
         $tabla = mysqli_real_escape_string($this->conexion->getConexion(), $tabla);

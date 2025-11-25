@@ -7,7 +7,7 @@ $key   = $_GET['key'] ?? '';
 $id    = $_GET['id'] ?? '';
 
 if ($tabla && $key) {
-    $datos = $alumnoDAO->actualizarEspecifico($tabla, $key, $id);
+    $datos = $alumnoDAO->mostrarEspecifico($tabla, $key, $id);
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($datos);
 } else {
