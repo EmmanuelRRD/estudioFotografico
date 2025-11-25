@@ -61,12 +61,12 @@
 							data-bs-auto-close="outside">Tablas</a>
 							<div class="dropdown-menu show" aria-labelledby="dropdown-441" data-bs-popper="none">
 														
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('clientes')">Clientes</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('fotografos')">Fotógrafos</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('materiales')">Materiales</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('eventos')">Eventos</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('alumnos')">PruebaBD</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('libros')">Libros</button>
+									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('equipo_trabajo','Equipos de trabajo')">Equipos de trabajo</button>
+									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('estudio','Sucursal')">Sucursal</button>
+									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('evento','Eventos')">Eventos</button>
+									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('material','Equipo Fotografico')">Equipo Fotografico</button>
+									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('nota','Notas')">Notas</button>
+									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('usuario','Usuarios')">Usuarios</button>
 								
 							</div>
 						</li>

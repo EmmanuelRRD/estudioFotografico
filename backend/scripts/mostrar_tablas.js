@@ -1,4 +1,4 @@
-function enviar(tabla) {
+function enviar(tabla,nombrePublicotabla) {
 
     const botonAg = document.getElementById("btn-agregar");
     //short url
@@ -25,7 +25,7 @@ function enviar(tabla) {
                 let firstRow = data[0];                // primera fila
                 let rescatar_key = Object.keys(firstRow)[0]; // nombre de la primera columna
 
-                titulo.innerHTML = tabla.toUpperCase();
+                titulo.innerHTML = nombrePublicotabla.toUpperCase();
 
                 const tablaElement = document.getElementById('tabla-contenido');
                 modalEditar.innerHTML = "";
@@ -134,14 +134,14 @@ function enviar(tabla) {
                     const btnEditar = document.createElement('button');
                     btnEditar.className = 'btn btn-sm me-1 display-4';
                     btnEditar.textContent = '✏️';
-                    btnEditar.onclick = () => llenarFormularioEditar(row, rescatar_key, id, rescatar_tabla);
+                    btnEditar.onclick = () => llenarFormularioEditar(row, rescatar_key, id, tabla, nombrePublicotabla.toUpperCase());
                     btnEditar.idName = 'modalAgregar';
 
                     //agregar el boton de eliminar
                     const btnEliminar = document.createElement('button');
                     btnEliminar.className = 'btn btn-sm display-4';
                     btnEliminar.textContent = '🗑️';
-                    btnEliminar.onclick = () => eliminar(id, rescatar_key, rescatar_tabla);
+                    btnEliminar.onclick = () => eliminar(id, rescatar_key, tabla, nombrePublicotabla.toUpperCase());
 
                     //atributos para el modal de bootstrap
                     btnEditar.setAttribute('data-bs-toggle', 'modal');

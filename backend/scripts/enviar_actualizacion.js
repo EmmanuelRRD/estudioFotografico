@@ -1,5 +1,5 @@
 
-function enviar_actualizacion(key, id, tabla) {
+function enviar_actualizacion(key, id, tabla, úblicName) {
 
 
     console.log("identificador: " + id);
@@ -13,6 +13,8 @@ function enviar_actualizacion(key, id, tabla) {
 
     const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditar'));
     modal.hide();
+
+    
 
     fetch("../controllers/procesar_cambios.php", {
         //../controllers/procesar_consultas.php?tabla=${tabla}
@@ -30,22 +32,25 @@ function enviar_actualizacion(key, id, tabla) {
         .then(res => res.text())
         .then(data => {
             alert(data);
-            enviar(tabla);
+            console.log("Nombre de la tabla: "+tabla);
+        console.log("Nombre de la id: "+id);
+        console.log("Nombre de la key: "+key);
+            enviar(tabla, úblicName);
 
         })
         .catch(err => console.error("Error:", err));
 
 }
 
-function llenarFormularioEditar(row, key, id, tabla) {
+function llenarFormularioEditar(row, key, id, tabla, úblicName) {
     const form = document.getElementById('contenidoEditar');
 
     form.querySelectorAll('input').forEach(input => {
         const campo = input.name;
 
         let btnConfirmar = document.getElementById('btnActualizar');
-
-        btnConfirmar.onclick = () => enviar_actualizacion(key, id, tabla);
+        
+        btnConfirmar.onclick = () => enviar_actualizacion(key, id, tabla, úblicName);
         if (campo in row) {
             input.value = row[campo];
         } else {

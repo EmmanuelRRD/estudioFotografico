@@ -6,7 +6,7 @@ class ConexionBDEscuela
     private $host = "localhost:3306";
     private $usuario = "root";
     private $password = "Menma93";
-    private $bd = "BD_Escuela_Web_2025";
+    private $bd = "bd_fotografias";
 
     public function __construct()
     {
