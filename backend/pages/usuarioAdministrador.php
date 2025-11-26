@@ -1,9 +1,12 @@
 <?php
 session_start();
-if (!$_SESSION['usuario_autenticado']) {
-    header("location: ../../login.php");
+
+if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado'] !== true) {
+    header("Location: ../../login.php");
+    exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -79,7 +82,7 @@ if (!$_SESSION['usuario_autenticado']) {
 						</li>
 						<li class="nav-item">
 					</ul>
-					<form action="../controllers/cerrar_sesion.php">
+					<form action="../controllers/cerrar_sesion.php" method="post">
 							<div class="navbar-buttons mbr-section-btn"><button type="submit" class="btn btn-success display-4" >Cerrar sesión</button></div>
                         </form>
 					

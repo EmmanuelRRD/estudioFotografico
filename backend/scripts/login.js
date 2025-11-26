@@ -1,34 +1,27 @@
-function login() {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+document.getElementById("formLogin").addEventListener("submit", function (e) {
+    e.preventDefault(); // Evita el post directo
+
+    const formData = new FormData(this);
 
     fetch("../backend/controllers/validar_usuario.php", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            email: email,
-            password: password
-        })
+        body: formData
     })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === "ok") {
-                
-                window.location.replace("../backend/pages/usuarioAdministrador.php");
-                alert(data.message);
-            } else {
-                console.log("Error:", data.message);
-            }
-            
-        })
+    .then(res => res.json())
+    .then(data => {
 
-        
-        .catch(err => console.error("Error en fetch:", err));
-}
+        if (data.status === "error") {
+            // Mostrar mensaje de error
+            alert(data.message);
+        }
 
-function mostrarToast(msg) {
-    // Aquí pones tu librería de toast o el tuyo propio
-    alert(msg); // ejemplo simple
-}
+        if (data.status === "ok") {
+            // Redirige si todo salió bien
+            window.location.href = data.redirect;
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Error en el servidor.");
+    });
+});

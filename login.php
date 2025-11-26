@@ -86,17 +86,18 @@
 
                     </div>
                     <div class="col-lg-12 mx-auto mbr-form" data-form-type="formoid">
-                        <form action="./backend/controllers/validar_usuario.php" method="post">
+                        <form id="formLogin" action="#" method="post">
                             <div class="dragArea row">
                                 <div class="col-12 form-group mb-3 mb-3 mt-5" data-for="email">
-                                    <input type="text" name="email" placeholder="Correo" data-form-field="email"
-                                        class="form-control" value="" id="email">
+                                    <input type="text" name="email" placeholder="usuario@ejemplo.com" data-form-field="email"
+                                        class="form-control" value="" id="email" require>
                                 </div>
                                 <div class="col-12 form-group" data-for="password">
-                                    <input type="password" name="password" placeholder="Contraseña"
+                                    <input type="password" name="password" placeholder="***********"
                                         data-form-field="password" class="form-control" value=""
-                                        id="password">
+                                        id="password" require>
                                 </div>
+                                <!-- El captcha -->
                                 <div class="col-12 form-group text-center">
                                     <div class="g-recaptcha" data-sitekey="6Lf9pRcsAAAAAO57GqyawvgdTj1QMb5HE3TlKMwL"></div>
                                 </div>
