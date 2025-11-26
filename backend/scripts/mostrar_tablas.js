@@ -2,15 +2,15 @@ function enviar(tabla, nombrePublicotabla) {
 
     const botonAg = document.getElementById("btn-agregar");
     //short url
-    console.log(tabla);
-    console.log(nombrePublicotabla);
-    fetch(`../controllers/procesar_consultas.php?tabla=${tabla}`)
+    //console.log(tabla);
+    //console.log(nombrePublicotabla);
+    fetch(`../backend/controllers/procesar_consultas.php?tabla=${tabla}`)
         .then(res => res.json())
         .then(data => {
             botonAg.style.display = "block";
 
             if (Array.isArray(data) && data.length > 0) {
-                console.log("Número de registros:", data.length);
+                //console.log("Número de registros:", data.length);
                 // Aquí procesas los datos normalmente
 
                 let titulo = document.getElementById('txtTableName');

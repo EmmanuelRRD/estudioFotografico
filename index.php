@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 $url = $_GET['url'] ?? '';
 $url = trim($url, '/'); // limpiar barras
 
@@ -47,6 +45,9 @@ switch ($url) {
     // Página 404
     default:
         http_response_code(404);
-        require "404.php";
+        require "./backend/404.php";
         break;
+
+
+    
 }

@@ -62,7 +62,7 @@ if ($conexion) {
 
         echo json_encode([
             "status" => "ok",
-            "redirect" => "../backend/pages/usuarioAdministrador.php"
+            "redirect" => "admin"
         ]);
         exit;
     }
