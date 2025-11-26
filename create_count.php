@@ -37,12 +37,12 @@
 			<div class="container">
 				<div class="navbar-brand">
 					<span class="navbar-logo">
-						<a href="./index.php">
+						<a href="rdestudio">
 							<img src="assets/images/logo.png" alt="Mobirise Website Builder" style="height: 3rem;">
 						</a>
 					</span>
 					<span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4"
-							href="./index.php">RD Estudio&nbsp;<br></a></span>
+							href="rdestudio">RD Estudio&nbsp;<br></a></span>
 				</div>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse"
 					data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent"
@@ -57,7 +57,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					
 					<div class="navbar-buttons mbr-section-btn"><a class="btn btn-success display-4"
-							href="./login.php">Inicia sesión</a></div>
+							href="acceder">Inicia sesión</a></div>
 				</div>
 			</div>
 		</nav>

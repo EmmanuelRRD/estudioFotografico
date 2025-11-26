@@ -27,7 +27,9 @@
     <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css?v=ivaKJG">
     <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css?v=ivaKJG" type="text/css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 
 <body>
 
@@ -38,12 +40,12 @@
             <div class="container">
                 <div class="navbar-brand">
                     <span class="navbar-logo">
-                        <a href="./index.php">
+                        <a href="rdestudio">
                             <img src="assets/images/logo.png" alt="Mobirise Website Builder" style="height: 3rem;">
                         </a>
                     </span>
                     <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4"
-                            href="./index.php">RD Estudio&nbsp;<br></a></span>
+                            href="rdestudio">RD Estudio&nbsp;<br></a></span>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse"
                     data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent"
@@ -58,18 +60,18 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
                         <li class="nav-item">
-                            <a class="nav-link link text-white display-4" href="./index.php#mi_trabajo"
+                            <a class="nav-link link text-white display-4" href="rdestudio#mi_trabajo"
                                 aria-expanded="false">Portafolio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link link text-white display-4" href="./index.php#fotografos">Fotografos</a>
+                            <a class="nav-link link text-white display-4" href="rdestudio#fotografos">Fotografos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link link text-white display-4" href="./index.php#donde_encontrarnos">Contactanos</a>
+                            <a class="nav-link link text-white display-4" href="rdestudio#donde_encontrarnos">Contactanos</a>
                         </li>
                     </ul>
                     <div class="navbar-buttons mbr-section-btn"><a class="btn btn-success display-4"
-                            href="./create_count.php">Crear Cuenta</a></div>
+                            href="crear_cuenta">Crear Cuenta</a></div>
                 </div>
             </div>
         </nav>
@@ -108,7 +110,7 @@
 
                                     <p class="mb-0 mt-2 text-muted" style="font-size: 20px;">
                                         ¿No tieneas cuenta?
-                                        <a href="./create_count.php" class="text fw-semibold text-decoration-none">Crea
+                                        <a href="crear_cuenta" class="text fw-semibold text-decoration-none">Crea
                                             sesión aquí</a>
                                     </p>
                                 </div>
@@ -131,3 +133,18 @@
 </body>
 
 </html>
+
+
+<?php /*if (isset($_GET['logout'])): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+Swal.fire({
+    icon: "success",
+    title: "Sesión cerrada",
+    text: "Has salido del sistema correctamente.",
+    timer: 3000,
+    showConfirmButton: false
+});
+</script>
+<?php endif; */
+?>
