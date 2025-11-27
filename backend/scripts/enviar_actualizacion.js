@@ -16,7 +16,7 @@ function enviar_actualizacion(key, id, tabla, úblicName) {
 
     
 
-    fetch("../controllers/procesar_cambios.php", {
+    fetch("../backend/controllers/procesar_cambios.php", {
         //../controllers/procesar_consultas.php?tabla=${tabla}
         method: "POST",
         headers: {

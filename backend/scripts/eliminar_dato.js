@@ -1,7 +1,7 @@
 function eliminar(id, key, tabla, publicName) {
     console.log("Datos a enviar:", { id, key, tabla });//comentar acabando las pruebas
 
-    fetch(`../controllers/procesar_bajas.php`, {
+    fetch(`../backend/controllers/procesar_bajas.php`, {
         method: 'DELETE',//el metodo
         headers: {
             'Content-Type': 'application/json'//que mandamos json

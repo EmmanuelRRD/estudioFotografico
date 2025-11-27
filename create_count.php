@@ -72,14 +72,13 @@
 						<h3 class="mbr-fonts-style align-center display-2 mt-4"><!-- Aqui el dysplay me hace un salto raro como un padding en el titulo, como lo puedo quitar y dejar un espacio de un-->
 							<strong></strong><strong>Crear Cuenta</strong>
 						</h3>
-
 					</div>
 				</div>
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
 					<!-- Formulario crear cuenta -->
-					<form action="./backend/controllers/validar_usuario.php" method="POST" class="mbr-form form-with-styler"
+					<form id="form-crear-cuenta" class="mbr-form form-with-styler"
 						data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true"
 							value="rTwSV6z37Ar3ENfGdrEUFc8T7W8A1/Hket9QYTnhkKhS/iDraswJatqZgiGOeHa502bhcAdW8ThV2tFXpiM3LrXfKfy7jbxppeuRSvTolu3cfT5oq7VxCEz8tV5JJ5Dx">
 						
@@ -87,45 +86,43 @@
 
 							<div class="col-12 form-group mb-3" data-for="nombre">
 								<input type="text" name="nombre" placeholder="Nombre" class="form-control"
-									id="nombre-form02">
+									id="nombre-form02" require>
 							</div>
 
 							<div class="col-md col-sm-12 form-group mb-3" data-for="primer_ap">
 								<input type="text" name="primer_ap" placeholder="Apellido paterno" class="form-control"
-									id="primerap-form02">
+									id="primerap-form02" require>
 							</div>
 
 							<div class="col-md col-sm-12 form-group mb-3" data-for="segundo_ap">
 								<input type="text" name="segundo_ap" placeholder="Apellido materno" class="form-control"
-									id="segundoap-form02">
+									id="segundoap-form02" require>
 							</div>
 
 							<div class="col-12 form-group mb-3" data-for="email">
 								<input type="email" name="email" placeholder="Correo electrónico" class="form-control"
-									id="email-form02">
+									id="email-form02" require>
 							</div>
 
 							<div class="col-12 form-group mb-3" data-for="telefono">
 								<input type="tel" name="telefono" placeholder="Teléfono" class="form-control"
-									id="telefono-form02">
+									id="telefono-form02" require>
 							</div>
 
 							<div class="col-md col-sm-12 form-group mb-3" data-for="password">
 								<input type="password" name="password" placeholder="Contraseña" class="form-control"
-									id="password-form02">
+									id="password-form02" require>
 							</div>
 
 							<div class="col-md col-sm-12 form-group mb-3" data-for="confirmar">
 								<input type="password" name="confirmar" placeholder="Confirmar contraseña"
-									class="form-control" id="confirmar-form02">
+									class="form-control" id="confirmar-form02" require>
 							</div>
 
 							<div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn mb-1">
 								<button type="submit" class="btn btn-success display-7 col-4">Confirmar</button>
 							</div>
-
 						</div>
-
 					</form>
 				</div>
 			</div>
@@ -137,7 +134,9 @@
 	<script src="assets/ytplayer/index.js"></script>
 	<script src="assets/dropdown/js/navbar-dropdown.js"></script>
 	<script src="assets/theme/js/script.js"></script>
-	<script src="assets/formoid/formoid.min.js"></script>
+	<!--<script src="assets/formoid/formoid.min.js"></script> -->
+
+	<script src="./backend/scripts/validaciones.js"></script>
 
 </body>
 

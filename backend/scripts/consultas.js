@@ -9,10 +9,9 @@ const botonAg = document.getElementById("btn-agregar");
 input.addEventListener('input', () => {
     clearBtn.style.display = input.value ? 'block' : 'none';
 
-    fetch(`../controllers/procesar_consultas_espesificas.php?tabla=${tabla.value}&key=${key.value}&id=${input.value}`)
+    fetch(`../backend/controllers/procesar_consultas_espesificas.php?tabla=${tabla.value}&key=${key.value}&id=${input.value}`)
         .then(res => res.json())
         .then(data => {
-            botonAg.style.display = "block";
             botonAg.style.display = "block";
 
             if (Array.isArray(data) && data.length > 0) {
@@ -166,6 +165,7 @@ input.addEventListener('input', () => {
         })
         .catch(error => {
             alert("Error en la busqueda de datos");
+            alert(error);
 
         });
 });

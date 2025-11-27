@@ -136,4 +136,17 @@ class AlumnoDAO
 
         return $datos;
     }
+
+    //------------ Mostrar Fotografos Disponibles -----------
+    public function mostrarFotografos()
+    {
+        /*
+        SELECT a.id, a.valor, b.dato
+        FROM tablaA a
+        INNER JOIN tablaB b ON a.id = b.id
+        WHERE a.valor = 'B';
+
+        //Esta consulta es estatica ya que todos los clientes deben de 
+        */
+    }
 }
