@@ -99,9 +99,15 @@
 									id="segundoap-form02" require>
 							</div>
 
-							<div class="col-12 form-group mb-3" data-for="email">
+							<div></div>
+
+							<div class="col-md col-sm-12 form-group mb-3" data-for="primer_ap">
 								<input type="email" name="email" placeholder="Correo electrónico" class="form-control"
 									id="email-form02" require>
+							</div>
+
+							<div class="col-md col-sm-12 form-group mb-3" data-for="segundo_ap">
+								<input type="date" name="fecha_nac" class="form-control" id="fecha-form02" required>
 							</div>
 
 							<div class="col-12 form-group mb-3" data-for="telefono">
