@@ -1,5 +1,5 @@
 <?php
-include_once('../database/conexion_bd_usuarios.php');
+include_once('../database/conexion_bd_escuela.php');
 
 $email = $_POST['email'] ?? null;
 $password = $_POST['password'] ?? null;
@@ -39,7 +39,7 @@ if (!$verificacion->success) {
 }
 
 // CONEXIÓN BD
-$con = new ConexionBDUsuarios();
+$con = new ConexionBDEscuela();
 $conexion = $con->getConexion();
 
 if ($conexion) {
@@ -47,11 +47,12 @@ if ($conexion) {
     $email_hash = sha1($email);
     $pass_hash  = sha1($password);
 
-    $sql = "SELECT * FROM usuarios WHERE Usuario = ? AND Password = ?";
+    $sql = "SELECT * FROM usuario WHERE correo = ? AND contrasenna = ?";
     $stmt = mysqli_prepare($conexion, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $email_hash, $pass_hash);
     mysqli_stmt_execute($stmt);
     $resultado = mysqli_stmt_get_result($stmt);
+
 
     // Usuario encontrado
     if ($resultado && mysqli_num_rows($resultado) === 1) {
