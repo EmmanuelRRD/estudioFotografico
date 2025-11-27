@@ -54,12 +54,18 @@ if ($conexion) {
     $resultado = mysqli_stmt_get_result($stmt);
 
 
+
+
     // Usuario encontrado
     if ($resultado && mysqli_num_rows($resultado) === 1) {
 
+        $usuario = mysqli_fetch_assoc($resultado);
+
+        $nombre_completo = $usuario['nombre'] . " " . $usuario['primer_ap'] . " " . $usuario['segundo_ap'];
+
         session_start();
         $_SESSION['usuario_autenticado'] = true;
-        $_SESSION['nombre_usuario'] = "Emmanuel";
+        $_SESSION['nombre_usuario'] = $nombre_completo;  
 
         echo json_encode([
             "status" => "ok",
