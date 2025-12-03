@@ -53,9 +53,6 @@ if ($conexion) {
     mysqli_stmt_execute($stmt);
     $resultado = mysqli_stmt_get_result($stmt);
 
-
-
-
     // Usuario encontrado
     if ($resultado && mysqli_num_rows($resultado) === 1) {
 
