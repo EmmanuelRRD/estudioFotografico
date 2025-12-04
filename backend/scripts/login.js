@@ -7,21 +7,21 @@ document.getElementById("formLogin").addEventListener("submit", function (e) {
         method: "POST",
         body: formData
     })
-    .then(res => res.json())
-    .then(data => {
+        .then(res => res.json())
+        .then(data => {
 
-        if (data.status === "error") {
-            // Mostrar mensaje de error
-            alert(data.message);
-        }
+            if (data.status === "error") {
+                // Mostrar mensaje de error
+                alert(data.message);
+            }
 
-        if (data.status === "ok") {
-            // Redirige si todo salió bien
-            window.location.href = data.redirect;
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Error en el servidor.");
-    });
+            if (data.status === "ok") {
+                // Redirige si todo salió bien
+                window.location.href = data.redirect;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Error en el servidor.");
+        });
 });

@@ -8,17 +8,20 @@ function enviar(tabla, nombrePublicotabla) {
         .then(res => res.json())
         .then(data => {
             botonAg.style.display = "block";
+            
 
             if (Array.isArray(data) && data.length > 0) {
                 //console.log("Número de registros:", data.length);
-                // Aquí procesas los datos normalmente
+                // Aquí procesas los datos normalmente 
 
                 let titulo = document.getElementById('txtTableName');
                 let modalEditar = document.getElementById('contenidoEditar');
                 let modalAgregar = document.getElementById('contenidoAgregar');
                 let btn_agregar = document.getElementById('btn_creador');
                 let nombreTabla = document.getElementById('nombre-tabla');
+                let saludar = document.getElementById('saludo');
 
+                saludar.style.display = "none";
                 nombreTabla.value = tabla;
 
                 let rescatar_tabla = tabla;
@@ -28,6 +31,7 @@ function enviar(tabla, nombrePublicotabla) {
                 let rescatar_key = Object.keys(firstRow)[0]; // nombre de la primera columna
 
                 titulo.innerHTML = nombrePublicotabla.toUpperCase();
+                titulo.style.display = "block";
 
                 const tablaElement = document.getElementById('tabla-contenido');
                 modalEditar.innerHTML = "";

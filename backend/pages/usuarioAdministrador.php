@@ -2,8 +2,8 @@
 session_start();
 
 if (!isset($_SESSION['usuario_autenticado'])) {
-    header("Location: /acceder");
-    exit;
+	header("Location: /acceder");
+	exit;
 }
 ?>
 
@@ -64,28 +64,11 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 					</div>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
-						<li class="nav-item dropdown open">
-							<a class="nav-link link text-white dropdown-toggle show display-4"
-							href="#" aria-expanded="true" data-toggle="dropdown-submenu" data-bs-toggle="dropdown"
-							data-bs-auto-close="outside">Tablas</a>
-							<div class="dropdown-menu show" aria-labelledby="dropdown-441" data-bs-popper="none">
-														
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('equipo_trabajo','Equipos de trabajo')">Equipos de trabajo</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('estudio','Sucursal')">Sucursal</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('evento','Eventos')">Eventos</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('material','Equipo Fotografico')">Equipo Fotografico</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('nota','Notas')">Notas</button>
-									<button class="text-white dropdown-item display-4" type="button" onclick="enviar('usuario','Usuarios')">Usuarios</button>
-								
-							</div>
-						</li>
-						<li class="nav-item">
-					</ul>
-					<form action="/logout" method="post">
-							<div class="navbar-buttons mbr-section-btn"><button type="submit" class="btn btn-success display-4" >Cerrar sesión</button></div>
-                        </form>
 					
+					<form action="/logout" method="post">
+						<div class="navbar-buttons mbr-section-btn"><button type="submit" class="btn btn-success display-4">Cerrar sesión</button></div>
+					</form>
+
 				</div>
 			</div>
 		</nav>
@@ -93,78 +76,81 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 	<!-- /Navbar-->
 
 	<div class="container mt-5 pt-5">
-        <div class="d-flex justify-content-between align-items-center mb-3 pt-3">
-            <h2 class="fw-bold text me-3 w-100" id="txtTableName"> Nombre de la tabla </h2>
+		<div class="d-flex justify-content-between align-items-center mb-3 pt-3">
+			<h2 class="fw-bold text me-3 w-100" id="txtTableName" style="display: none;"> Nombre de la tabla </h2>
 
-            <div class="separador_consultas w-100 d-flex justify-content-start">
-                <input class="form-control me-2" type="hidden" placeholder="Buscar" aria-label="Search" id="search_id">
-                <button class="btn btn-light" id="clear_btn" type="button">✖</button>
-            </div>
+			<div class="separador_consultas w-100 d-flex justify-content-start">
+				<input class="form-control me-2" type="hidden" placeholder="Buscar" aria-label="Search" id="search_id">
+				<button class="btn btn-light" id="clear_btn" type="button">✖</button>
+			</div>
 
-            <!-- ==================== El hidden ================== -->
-            <input type="hidden" id="search_tabla" name="search_tabla" />
-            <input type="hidden" id="nombre-tabla" name="nombre-tabla" />
-            <button class="btn display-4" id="btn-agregar" data-bs-toggle="modal" data-bs-target="#modalAgregar">
-                ➕ 
-            </button>
-        </div>
-        <div>
-            <?php echo "Bienvenido ".$_SESSION['nombre_usuario']
-            ?>
-        </div>
-        <!-- Tabla de productos -->
-        <div class="table-responsive shadow-sm bg-white rounded-5" style="max-height: 65vh; overflow-y: auto;">
-            <table class="table table-hover align-middle mb-0" id="tabla-contenido">
+			<!-- ==================== El hidden ================== -->
+			<input type="hidden" id="search_tabla" name="search_tabla" />
+			<input type="hidden" id="nombre-tabla" name="nombre-tabla" />
+			<button class="btn display-4" id="btn-agregar" data-bs-toggle="modal" data-bs-target="#modalAgregar" style="display: none;">
+				➕
+			</button>
+		</div>
+		<div>
+			<h2 id="saludo" class="fw-bold text me-3 w-100 animate__animated animate__delay-1s animate__fadeIn pt-5 text-center">
+				Bienvenido <?= htmlspecialchars($_SESSION['nombre_usuario']) ?>
+				!!!!!
+			</h2>
 
-            </table>
-        </div>
-    </div>
+		</div>
+		<!-- Tabla de productos -->
+		<div class="table-responsive shadow-sm bg-white rounded-5" style="max-height: 65vh; overflow-y: auto;">
+			<table class="table table-hover align-middle mb-0" id="tabla-contenido">
 
-    <!--========================== Aqui empiezan los Modales ======================= -->
+			</table>
+		</div>
+	</div>
 
-    <!-- Modal: Agregar  -->
-    <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-warning text-white">
-                    <h5 class="modal-title" id="modalAgregarLabel">Agregar nuevo producto</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="addInfo">
-                        <div class="row g-3" id="contenidoAgregar">
+	<!--========================== Aqui empiezan los Modales ======================= -->
 
-                        </div>
-                    </form>
-                    <button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-warning text-white mt-3" id="btn_creador" onclick="">Agregar</button>
+	<!-- Modal: Agregar  -->
+	<div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header bg-warning text-white">
+					<h5 class="modal-title" id="modalAgregarLabel">Agregar nuevo producto</h5>
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body">
+					<form id="addInfo">
+						<div class="row g-3" id="contenidoAgregar">
 
-                </div>
-            </div>
-        </div>
-    </div>
+						</div>
+					</form>
+					<button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
+					<button class="btn btn-warning text-white mt-3" id="btn_creador" onclick="">Agregar</button>
 
-    <!-- Modal: Editar producto -->
-    <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-warning text-white">
-                    <h5 class="modal-title" id="modalEditarLabel">Editar producto</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="newInfo">
-                        <div class="row g-3" id="contenidoEditar">
+				</div>
+			</div>
+		</div>
+	</div>
 
-                        </div>
-                    </form>
-                    <button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-warning text-white mt-3" id="btnActualizar">Guardar cambios</button>
+	<!-- Modal: Editar producto -->
+	<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header bg-warning text-white">
+					<h5 class="modal-title" id="modalEditarLabel">Editar producto</h5>
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body">
+					<form id="newInfo">
+						<div class="row g-3" id="contenidoEditar">
 
-                </div>
-            </div>
-        </div>
-    </div>
+						</div>
+					</form>
+					<button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
+					<button class="btn btn-warning text-white mt-3" id="btnActualizar">Guardar cambios</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="../../assets/smoothscroll/smooth-scroll.js"></script>
@@ -173,12 +159,12 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 	<script src="../../assets/theme/js/script.js"></script>
 	<script src="../../assets/formoid/formoid.min.js"></script>
 
-	
+
 	<script src="../../backend/scripts/mostrar_tablas.js"></script>
-    <script src="../../backend/scripts/enviar_actualizacion.js"></script>
-    <script src="../../backend/scripts/eliminar_dato.js"></script>
-    <script src="../../backend/scripts/crear.js"></script>
-    <script src="../../backend/scripts/consultas.js"></script>
+	<script src="../../backend/scripts/enviar_actualizacion.js"></script>
+	<script src="../../backend/scripts/eliminar_dato.js"></script>
+	<script src="../../backend/scripts/crear.js"></script>
+	<script src="../../backend/scripts/consultas.js"></script>
 
 	<input name="animation" type="hidden">
 </body>

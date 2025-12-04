@@ -32,6 +32,11 @@ switch ($url) {
         require "backend/pages/usuarioAdministrador.php";
         break;
 
+    //Cliente
+    case 'cliente':
+        require "backend/pages/usuarioCliente.php";
+        break;
+
     // Cerrar sesión
     case 'logout':
         require "backend/controllers/cerrar_sesion.php";

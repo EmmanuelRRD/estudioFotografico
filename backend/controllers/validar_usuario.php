@@ -64,10 +64,18 @@ if ($conexion) {
         $_SESSION['usuario_autenticado'] = true;
         $_SESSION['nombre_usuario'] = $nombre_completo;  
 
-        echo json_encode([
+        if($usuario['tipo_usuario']=="cliente"){
+            echo json_encode([
+            "status" => "ok",
+            "redirect" => "cliente"
+        ]);
+        }else{
+            echo json_encode([
             "status" => "ok",
             "redirect" => "admin"
         ]);
+        }
+        
         exit;
     }
 
