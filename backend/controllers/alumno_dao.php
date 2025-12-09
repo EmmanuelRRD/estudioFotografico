@@ -14,23 +14,38 @@ class AlumnoDAO
     //=================== Metodos abcc (CRUD) =================
 
     //------------- Altas ----------
-    public function agregar($tabla, $valores)
-    {
-        $columnas = implode(", ", array_keys($valores));
-        $placeholders = implode(", ", array_fill(0, count($valores), "?"));
+public function agregar($tabla, $valores)
+{
+    $columnas = implode(", ", array_keys($valores));
+    $placeholders = implode(", ", array_fill(0, count($valores), "?"));
 
-        $sql = "INSERT INTO $tabla ($columnas) VALUES ($placeholders)";
-        $stmt = $this->conexion->getConexion()->prepare($sql);
+    $sql = "INSERT INTO $tabla ($columnas) VALUES ($placeholders)";
+    $stmt = $this->conexion->getConexion()->prepare($sql);
 
-        $tipos = str_repeat("s", count($valores)); // todos string
-        $stmt->bind_param($tipos, ...array_values($valores));
+    $tipos = str_repeat("s", count($valores)); // todos string
+    $stmt->bind_param($tipos, ...array_values($valores));
 
-        if ($stmt->execute()) {
-            echo "Alumno agregado correctamente.";
-        } else {
-            echo "Error al agregar alumno";
+    try {
+        $stmt->execute();
+        echo "Agregado correctamente.";
+    } catch (mysqli_sql_exception $e) {
+        switch ($e->getCode()) {
+            case 1062:
+                echo "Error: El identificador ya existe.";
+                break;
+            case 1452:
+                echo "Error: No existe ese identificador.";
+                break;
+            default:
+                echo "Error al agregar: " . $e->getMessage();
+                break;
         }
     }
+}
+
+
+
+
 
     //------------ Eliminar -----------
     public function eliminarRegistro($key, $id, $tabla)
@@ -113,7 +128,6 @@ class AlumnoDAO
             echo json_encode(["status" => "ok"]);
         } else {
             echo json_encode(["Error" => mysqli_error($this->conexion->getConexion())]);
-
         }
     }
 

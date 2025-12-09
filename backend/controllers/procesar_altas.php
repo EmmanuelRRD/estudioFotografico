@@ -10,4 +10,3 @@ $datos = $data['datos'];
 $alumnoDAO = new AlumnoDAO();
 
 return $alumnoDAO->agregar($tabla, $datos);
-

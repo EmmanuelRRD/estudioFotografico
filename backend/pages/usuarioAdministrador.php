@@ -136,7 +136,6 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 				<div class="modal-body">
 					<form id="addInfo">
 
-						<!-- ⬇️ Campos generados dinámicamente -->
 						<div class="row g-3" id="contenidoAgregar"></div>
 
 					</form>

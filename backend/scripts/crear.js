@@ -1,5 +1,12 @@
-function crear(tabla) {
+function crear(tabla,nombrePublicTabla) {
     const form = document.getElementById('addInfo');
+    
+
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
     const formData = new FormData(form);
     const datos = {};
 
@@ -10,22 +17,18 @@ function crear(tabla) {
     const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
     modal.hide();
 
-    fetch("../controllers/procesar_altas.php", {
+    fetch("/backend/controllers/procesar_altas.php", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            datos: datos,
-            tabla: tabla
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ datos, tabla })
     })
-        .then(res => res.text())
-        .then(data => {
-            alert(data);
-            enviar(tabla);
-
-        })
-        .catch(err => console.error("Error:", err));
-
+    .then(res => res.text())
+    .then(data => {
+        console.log(tabla);
+        console.log(data);
+        alert(data); // o reemplazar con un toast
+        enviar(tabla,nombrePublicTabla); // refrescar tabla
+        //form.reset(); // limpiar inputs
+    })
+    .catch(err => console.error("Enrror al solicitar la alta"));
 }
