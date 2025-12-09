@@ -69,7 +69,7 @@ const reglasValidacion = {
             { required: true },
             { regex: /^[01]$/, mensaje: "Solo se permite 0=No o 1=Si." }
         ],
-        "Identificador evento":[
+        "Identificador evento": [
             { required: true, mensaje: "Campo obligatorio." },
             { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ]
@@ -214,45 +214,67 @@ const reglasValidacion = {
     }
 };
 
-async function enviar(tabla, nombrePublicotabla) {
+function enviar(tabla, nombrePublicotabla) {
+    const fbBd = document.getElementById('nombre-tabla-bd');
+    fbBd.value = tabla;
+
+    const fbBdPb = document.getElementById('nombre-publico-tabla-bd');
+    fbBdPb.value = nombrePublicotabla;
+
+    consultar(`../backend/controllers/procesar_consultas.php?tabla=${tabla}`, tabla, nombrePublicotabla);
+}
+
+function enviarFiltro(tabla, key, nombrePublicotabla, datoValidar) {
+    consultar(`/backend/controllers/procesar_consultas_espesificas.php?tabla=${tabla}&key=${key}&id=${datoValidar}`, tabla, nombrePublicotabla);
+}
+
+async function consultar(url, tabla, nombrePublicoTabla) {
 
     const botonAg = document.getElementById("btn-agregar");
     const tablaElement = document.getElementById('tabla-contenido');
-    const modalEditar = document.getElementById('contenidoEditar');
-    const modalAgregar = document.getElementById('contenidoAgregar');
-    const botonAgregar = document.getElementById("btn_creador");
-    const botonEditar = document.getElementById("btnActualizar");
 
     limpiarTablaYModales();
 
     try {
-        const res = await fetch(`../backend/controllers/procesar_consultas.php?tabla=${tabla}`);
+        const res = await fetch(url);
         const data = await res.json();
+        //console.log(data);
 
         if (!Array.isArray(data) || data.length === 0) {
             mostrarVacio();
             return;
         }
 
-        configurarEncabezado(tabla, nombrePublicotabla);
+        configurarEncabezado(tabla, nombrePublicoTabla);
         botonAg.style.display = "block";
 
         const columnas = Object.keys(data[0]);
-
         const idColumna = columnas[0];
 
-        renderHead(tablaElement, tabla);
-        renderBody(tablaElement, data, columnas, idColumna, tabla, nombrePublicotabla);
-        renderFormFields(modalEditar, modalAgregar, tabla, columnas);
+        renderHead(tablaElement, tabla, columnas);
+        renderBody(tablaElement, data, columnas, idColumna, tabla, nombrePublicoTabla);
 
+        renderFormFields(
+            document.getElementById("contenidoEditar"),
+            document.getElementById("contenidoAgregar"),
+            tabla,
+            columnas
+        );
 
-        activarValidacionDinamica(modalAgregar, tabla, botonAgregar);
-        activarValidacionDinamica(modalEditar, tabla, botonEditar);
-
+        activarValidacionDinamica(
+            document.getElementById("contenidoAgregar"),
+            tabla,
+            document.getElementById("btn_creador")
+        );
+        activarValidacionDinamica(
+            document.getElementById("contenidoEditar"),
+            tabla,
+            document.getElementById("btnActualizar")
+        );
 
     } catch (error) {
-        console.error(error);
-        alert("Error tabla no encontrada");
+        console.error("Error en la consulta:", error);
+        alert("Error al consultar los datos.");
         botonAg.style.display = "none";
         limpiarTablaYModales(true);
     }
@@ -380,7 +402,7 @@ function configurarEncabezado(tabla, nombrePublicotabla) {
 /* TABLA: ENCABEZADO                                              */
 /* ────────────────────────────────────────────────────────────── */
 
-function renderHead(tablaElement, tabla) {
+function renderHead(tablaElement, tabla, columnasBD) {
     const thead = document.createElement('thead');
     const tr = document.createElement('tr');
 
@@ -391,7 +413,7 @@ function renderHead(tablaElement, tabla) {
         return;
     }
 
-    columnas.forEach(col => {
+    columnas.forEach((col, index) => {
         const th = document.createElement('th');
 
         const divCheck = document.createElement('div');
@@ -401,7 +423,8 @@ function renderHead(tablaElement, tabla) {
         check.type = 'checkbox';
         check.className = 'checkbox-modern';
         check.name = "columnas";
-        check.value = col;
+        check.value = col;                  // nombre bonito para UI
+        check.dataset.columnaBd = columnasBD[index];   // nombre REAL de BD
         check.addEventListener('change', () => manejarCambioCheckbox(check));
 
         const label = document.createElement('span');
@@ -469,23 +492,30 @@ function crearCheckboxColumna(col) {
 }
 
 function manejarCambioCheckbox(check) {
-    const a = document.getElementById('search_tabla');
-    const b = document.getElementById('search_id');
+    const inputColUI = document.getElementById('search_tabla');        // nombre bonito
+    const inputBusqueda = document.getElementById('search_id');
+    const inputColBD = document.getElementById('nombre-col-bd');       // nombre real BD
     const clearBtn = document.getElementById('clear_btn');
 
     if (check.checked) {
+
         document.querySelectorAll('input[name="columnas"]').forEach(c => {
             if (c !== check) c.checked = false;
         });
 
-        a.value = check.value;
-        b.type = "text";
+        inputColUI.value = check.value;                 // nombre bonito
+        inputColBD.value = check.dataset.columnaBd;     // nombre real BD
+        console.log(check.dataset.columnaBd);
+        inputBusqueda.type = "text";
+
     } else {
         clearBtn.style.display = 'none';
-        b.type = "hidden";
-        a.value = "";
+        inputBusqueda.type = "hidden";
+        inputColUI.value = "";
+        inputColBD.value = "";
     }
 }
+
 
 /* ────────────────────────────────────────────────────────────── */
 /* TABLA: CUERPO                                                  */
@@ -568,7 +598,7 @@ function llenarFormularioEditar(rowData, idCol, idValue, tabla, nombrePublico) {
 
     const modal = document.getElementById("contenidoEditar");
     const inputs = modal.querySelectorAll("[data-columna]");
-    const columnasBD = Object.keys(rowData);  
+    const columnasBD = Object.keys(rowData);
     const botonEditar = document.getElementById("btnActualizar");
 
     inputs.forEach((input, i) => {
@@ -586,7 +616,7 @@ function llenarFormularioEditar(rowData, idCol, idValue, tabla, nombrePublico) {
     let estado = {};
 
     inputs.forEach(input => {
-        const columnaUI = input.getAttribute("data-columna"); 
+        const columnaUI = input.getAttribute("data-columna");
         estado[columnaUI] = false;
 
         // Buscar mensaje de error al lado del input

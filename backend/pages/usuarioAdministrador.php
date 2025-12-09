@@ -94,13 +94,17 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 	<div class="container mt-5 pt-5">
 		<div class="d-flex justify-content-between align-items-center mb-3 pt-3">
 			<h2 class="fw-bold text me-3 w-100" id="txtTableName" style="display: none;"> Nombre de la tabla </h2>
+			<!-- ==================== El hidden ================== -->
+			<input type="hidden" id="nombre-tabla-bd" name="nombre-tabla-bd" />
+			<input type="hidden" id="nombre-publico-tabla-bd" name="nombre-tabla-bd" />
+			<input type="hidden" id="nombre-col-bd" name="nombre-col-bd" />
 
 			<div class="separador_consultas w-100 d-flex justify-content-start">
 				<input class="form-control me-2" type="hidden" placeholder="Buscar" aria-label="Search" id="search_id">
 				<button class="btn btn-light" id="clear_btn" type="button">✖</button>
 			</div>
 
-			<!-- ==================== El hidden ================== -->
+			
 			<input type="hidden" id="search_tabla" name="search_tabla" />
 			<input type="hidden" id="nombre-tabla" name="nombre-tabla" />
 			<button class="btn display-4" id="btn-agregar" data-bs-toggle="modal" data-bs-target="#modalAgregar" style="display: none;">

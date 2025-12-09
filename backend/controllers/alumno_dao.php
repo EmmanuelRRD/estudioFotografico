@@ -14,34 +14,34 @@ class AlumnoDAO
     //=================== Metodos abcc (CRUD) =================
 
     //------------- Altas ----------
-public function agregar($tabla, $valores)
-{
-    $columnas = implode(", ", array_keys($valores));
-    $placeholders = implode(", ", array_fill(0, count($valores), "?"));
+    public function agregar($tabla, $valores)
+    {
+        $columnas = implode(", ", array_keys($valores));
+        $placeholders = implode(", ", array_fill(0, count($valores), "?"));
 
-    $sql = "INSERT INTO $tabla ($columnas) VALUES ($placeholders)";
-    $stmt = $this->conexion->getConexion()->prepare($sql);
+        $sql = "INSERT INTO $tabla ($columnas) VALUES ($placeholders)";
+        $stmt = $this->conexion->getConexion()->prepare($sql);
 
-    $tipos = str_repeat("s", count($valores)); // todos string
-    $stmt->bind_param($tipos, ...array_values($valores));
+        $tipos = str_repeat("s", count($valores)); // todos string
+        $stmt->bind_param($tipos, ...array_values($valores));
 
-    try {
-        $stmt->execute();
-        echo "Agregado correctamente.";
-    } catch (mysqli_sql_exception $e) {
-        switch ($e->getCode()) {
-            case 1062:
-                echo "Error: El identificador ya existe.";
-                break;
-            case 1452:
-                echo "Error: No existe ese identificador.";
-                break;
-            default:
-                echo "Error al agregar: " . $e->getMessage();
-                break;
+        try {
+            $stmt->execute();
+            echo "Agregado correctamente.";
+        } catch (mysqli_sql_exception $e) {
+            switch ($e->getCode()) {
+                case 1062:
+                    echo "Error: El identificador ya existe.";
+                    break;
+                case 1452:
+                    echo "Error: No existe ese identificador.";
+                    break;
+                default:
+                    echo "Error al agregar: " . $e->getMessage();
+                    break;
+            }
         }
     }
-}
 
 
 
@@ -133,24 +133,28 @@ public function agregar($tabla, $valores)
 
     public function mostrarEspecifico($tabla, $key, $id)
     {
-        // Validar tabla y campo (evita inyección SQL)
-        $tabla = mysqli_real_escape_string($this->conexion->getConexion(), $tabla);
-        $key   = mysqli_real_escape_string($this->conexion->getConexion(), $key);
-        $like = "$id%";
+        $con = $this->conexion->getConexion();
 
-        $sql = "SELECT * FROM $tabla WHERE $key LIKE '$like'";
+        // Sanitizar nombres (solo evitar inyección en nombres, no se puede usar bind_param para eso)
+        $tabla = mysqli_real_escape_string($con, $tabla);
+        $key   = mysqli_real_escape_string($con, $key);
 
-        $stmt = $this->conexion->getConexion()->prepare($sql);
+        // LIKE %id%
+        $like = "%" . $id . "%";
 
+        // Usar consulta preparada
+        $sql = "SELECT * FROM $tabla WHERE $key LIKE ?";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("s", $like);
         $stmt->execute();
 
         $res = $stmt->get_result();
         $datos = $res->fetch_all(MYSQLI_ASSOC);
 
         $stmt->close();
-
         return $datos;
     }
+
 
     //------------ Mostrar Fotografos Disponibles -----------
     public function mostrarFotografos()
