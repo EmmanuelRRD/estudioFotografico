@@ -47,6 +47,10 @@ switch ($url) {
         require "backend/pages/usuarios.php";
         break;
 
+    case 'ver_fotografos':
+        require "backend/controllers/clientes/fotografos_disponibles.php";
+        break;
+
     // Página 404
     default:
         http_response_code(404);

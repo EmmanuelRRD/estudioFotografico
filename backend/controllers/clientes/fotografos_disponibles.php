@@ -1,6 +1,6 @@
 <?php
 //select * from vista_fotografos_eventos_limitada; --> consulta para trabajar
-    include_once('./cliente_dao.php');
+    include_once './cliente_dao.php';
 
     $cliente = new clienteDao;
 

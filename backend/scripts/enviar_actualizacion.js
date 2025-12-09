@@ -33,10 +33,9 @@ function enviar_actualizacion(key, id, tabla, úblicName) {
         .then(data => {
             alert(data);
             console.log("Nombre de la tabla: "+tabla);
-        console.log("Nombre de la id: "+id);
-        console.log("Nombre de la key: "+key);
+            console.log("Nombre de la id: "+id);
+            console.log("Nombre de la key: "+key);
             enviar(tabla, úblicName);
-
         })
         .catch(err => console.error("Error:", err));
 

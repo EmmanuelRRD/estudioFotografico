@@ -64,7 +64,24 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 					</div>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					
+					<ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+						<li class="nav-item dropdown open">
+							<a class="nav-link link text-white dropdown-toggle show display-4"
+								href="#" aria-expanded="true" data-toggle="dropdown-submenu" data-bs-toggle="dropdown"
+								data-bs-auto-close="outside">Tablas</a>
+							<div class="dropdown-menu show" aria-labelledby="dropdown-441" data-bs-popper="none">
+
+								<button class="text-white dropdown-item display-4" type="button" onclick="enviar('equipo_trabajo','Equipos de trabajo')">Equipos de trabajo</button>
+								<button class="text-white dropdown-item display-4" type="button" onclick="enviar('estudio','Sucursal')">Sucursal</button>
+								<button class="text-white dropdown-item display-4" type="button" onclick="enviar('evento','Eventos')">Eventos</button>
+								<button class="text-white dropdown-item display-4" type="button" onclick="enviar('material','Equipo Fotografico')">Equipo Fotografico</button>
+								<button class="text-white dropdown-item display-4" type="button" onclick="enviar('nota','Notas')">Notas</button>
+								<button class="text-white dropdown-item display-4" type="button" onclick="enviar('usuario','Usuarios')">Usuarios</button>
+
+							</div>
+						</li>
+						<li class="nav-item">
+					</ul>
 					<form action="/logout" method="post">
 						<div class="navbar-buttons mbr-section-btn"><button type="submit" class="btn btn-success display-4">Cerrar sesión</button></div>
 					</form>

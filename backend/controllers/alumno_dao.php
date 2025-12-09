@@ -28,7 +28,7 @@ class AlumnoDAO
         if ($stmt->execute()) {
             echo "Alumno agregado correctamente.";
         } else {
-            echo "Error al agregar alumno: " . mysqli_error($this->conexion->getConexion());
+            echo "Error al agregar alumno";
         }
     }
 
@@ -94,7 +94,7 @@ class AlumnoDAO
         return $datos;
     }
 
-    //------------ Actualizar -----------
+    //------------ Actualizar -----------   
     public function actualizar($key, $id, $tabla, $valores)
     {
         $set = implode(", ", array_map(fn($k) => "$k = ?", array_keys($valores)));
@@ -110,9 +110,10 @@ class AlumnoDAO
         $stmt->bind_param($tipos, ...$params);
 
         if ($stmt->execute()) {
-            echo "Actualización exitosa";
+            echo json_encode(["status" => "ok"]);
         } else {
-            echo "Error: " . mysqli_error($this->conexion->getConexion());
+            echo json_encode(["Error" => mysqli_error($this->conexion->getConexion())]);
+
         }
     }
 

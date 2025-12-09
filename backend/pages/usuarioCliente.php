@@ -34,9 +34,14 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 	<link rel="preload" as="style" href="../../assets/mobirise/css/mbr-additional.css?v=K8VXrR">
 	<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css?v=K8VXrR" type="text/css">
 
+	<!-- FullCalendar CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+
+	<!-- FullCalendar JS -->
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
 
 
-
+	<script src="../../backend/scripts/generar_calendario.js"></script>
 </head>
 
 <body>
@@ -54,13 +59,26 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 					</span>
 					<span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4" href="#">RD Estudio&nbsp;<br></a></span>
 				</div>
-				<div class="separador_consultas w-50 d-flex justify-content-start">
-					<input class="form-control me-2" type="" placeholder="Buscar" aria-label="Search" id="search_id">
-				</div>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+					<div class="hamburger">
+						<span></span>
+						<span></span>
+					</div>
+				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+						<li class="nav-item dropdown open">
+							<div class="separador_consultas d-flex justify-content-center w-100">
+								<input class="form-control me-2" type="text" placeholder="Buscar" aria-label="Search" id="search_id" style="max-width: 300px;">
+							</div>
 
+						</li>
+						<li class="nav-item">
+					</ul>
 					<form action="/logout" method="post">
-						<div class="navbar-buttons mbr-section-btn"><button type="submit" class="btn btn-success display-4">Cerrar sesión</button></div>
+						<div class="separador_consultas d-flex justify-content-center w-100">
+							<div class="navbar-buttons mbr-section-btn"><button type="submit" class="btn btn-success display-4">Cerrar sesión</button></div>
+						</div>
 					</form>
 
 				</div>
@@ -71,70 +89,25 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 
 	<div class="container mt-5 pt-5">
 		<div class="d-flex justify-content-between align-items-center mb-3 pt-3">
-			<h2 class="fw-bold text me-3 w-100" id="txtTableName"> Fotógrafos Disponibles </h2>
+			<h2 class="fw-bold text me-3 w-100" id="txtTableName" style="display: none;"> Fotógrafos Disponibles </h2>
 
 		</div>
 
 		<div>
-			<h2 id="saludo" class="fw-bold text me-3 w-100 animate__animated animate__delay-1s animate__fadeIn pt-5 text-center">
-				Bienvenido <?= htmlspecialchars($_SESSION['nombre_usuario']) ?>
-				!!!!!
-			</h2>
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				<h1 class="display-4">Bienvenido <?= htmlspecialchars($_SESSION['nombre_usuario']) ?>!!!!!</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+
 
 		</div>
-		<!-- Tabla de productos -->
-		<div class="table-responsive shadow-sm bg-white rounded-5" style="max-height: 65vh; overflow-y: auto;">
-			<table class="table table-hover align-middle mb-0" id="tabla-contenido">
 
-			</table>
+		<div id="calendario">
+
 		</div>
 	</div>
 
 	<!--========================== Aqui empiezan los Modales ======================= -->
-
-	<!-- Modal: Agregar  -->
-	<div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header bg-warning text-white">
-					<h5 class="modal-title" id="modalAgregarLabel">Agregar nuevo producto</h5>
-					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
-					<form id="addInfo">
-						<div class="row g-3" id="contenidoAgregar">
-
-						</div>
-					</form>
-					<button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
-					<button class="btn btn-warning text-white mt-3" id="btn_creador" onclick="">Agregar</button>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Modal: Editar producto -->
-	<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header bg-warning text-white">
-					<h5 class="modal-title" id="modalEditarLabel">Editar producto</h5>
-					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
-					<form id="newInfo">
-						<div class="row g-3" id="contenidoEditar">
-
-						</div>
-					</form>
-					<button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
-					<button class="btn btn-warning text-white mt-3" id="btnActualizar">Guardar cambios</button>
-
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="../../assets/smoothscroll/smooth-scroll.js"></script>
@@ -142,13 +115,7 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 	<script src="../../assets/dropdown/js/navbar-dropdown.js"></script>
 	<script src="../../assets/theme/js/script.js"></script>
 	<script src="../../assets/formoid/formoid.min.js"></script>
-
-
-	<script src="../../backend/scripts/mostrar_tablas.js"></script>
-	<script src="../../backend/scripts/enviar_actualizacion.js"></script>
-	<script src="../../backend/scripts/eliminar_dato.js"></script>
-	<script src="../../backend/scripts/crear.js"></script>
-	<script src="../../backend/scripts/consultas.js"></script>
+	
 
 	<input name="animation" type="hidden">
 </body>
