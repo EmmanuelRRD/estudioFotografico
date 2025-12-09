@@ -2,45 +2,214 @@ const tablasChidas = {
     "equipo_trabajo": ["Identificador", "descripcion"],
     "estudio": ["Identificador", "Nombre", "Dirección", "Tipo Entregas", "Encargado", "Jefe"],
     "evento": ["Identificador", "Fecha evento", "Paquete", "Fotos chicas", "Fotos grandes", "Ampliaciones", "Confirmado"],
-    "material": ["Identificador", "nombre", "tipo", "stock", "Código Estudio"],
+    "material": ["Identificador", "Nombre", "Tipo", "Stock", "Código Estudio"],
     "material_necesario": ["Identificador", "Identificador material", "Identificador evento", "Cantidad"],
-    "nombre_tablas": ["Identificador", "nombre", "precio", "stock"],
+    "nombre_tablas": ["Identificador", "Nombre", "Precio", "Stock"],
     "nota": ["Identificador", "Identificador evento", "Material Necesario", "Equipo", "Descripcion"],
     "usuario": ["Identificador", "Identificador estudio", "Nombres", "Primer Apellido", "Segundo apellido", "Fecha de nacimiento", "Telefono", "Correo", "Privilegios", "Contraseña"],
     "usuario_equipo": ["Identificador", "Identificador equipo"]
 };
 
 const reglasValidacion = {
-    usuario: {
-        "Nombres": { required: true, regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/, mensaje: "Solo letras." },
-        "Primer Apellido": { required: true, regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/, mensaje: "Solo letras." },
-        "Segundo apellido": { required: true, regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/, mensaje: "Solo letras." },
-        "Correo": { required: true, regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, mensaje: "Correo inválido." },
-        "Telefono": [
+
+    // ────────────────────────────────
+    // TABLA: EQUIPO_TRABAJO
+    // ────────────────────────────────
+    equipo_trabajo: {
+        "Identificador": [
             { required: true, mensaje: "Campo obligatorio." },
-            { regex: /^[0-9]+$/, mensaje: "Solo números." },
-            { regex: /^[0-9]{10}$/, mensaje: "Debe tener 10 dígitos." }
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
-        "Contraseña": [
-            { min: 6, mensaje: "Mínimo 6 caracteres." },
-            { regex: /[A-Z]/, mensaje: "Debe tener una mayúscula." },
-            { regex: /[0-9]/, mensaje: "Debe tener un número." }
-        ],
-        "Fecha de nacimiento": {
-            required: true,
-            custom: (v) => new Date(v) < new Date(),
-            mensaje: "Debe ser una fecha válida menor a hoy."
-        }
+        "descripcion": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo letras." }
+        ]
     },
 
+    // ────────────────────────────────
+    // TABLA: ESTUDIO
+    // ────────────────────────────────
+    estudio: {
+        "Identificador": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+        ],
+        "Nombre": [{ required: true, mensaje: "Campo obligatorio." },
+        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo letras." }
+        ],
+        "Dirección": [{ required: true, mensaje: "Campo obligatorio." }],
+        "Tipo Entregas": [{ required: true, mensaje: "Campo obligatorio." },
+        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo letras." }
+        ],
+        "Encargado": [{ required: true, mensaje: "Campo obligatorio." },
+        { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+        ],
+        "Jefe": [{ required: true, mensaje: "Campo obligatorio." },
+        { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+        ]
+    },
+
+    // ────────────────────────────────
+    // TABLA: EVENTO
+    // ────────────────────────────────
     evento: {
-        "Fecha evento": {
-            required: true,
-            custom: (v) => new Date(v) >= new Date("2000-01-01"),
-            mensaje: "Fecha inválida."
-        }
+        "Identificador": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+        ],
+        "Fecha evento": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { custom: v => new Date(v) >= new Date("2000-01-01"), mensaje: "Fecha inválida." }
+        ],
+        "Paquete": [{ required: true }],
+        "Fotos chicas": [{ regex: /^[0-9]+$/, mensaje: "Debe ser un número." }],
+        "Fotos grandes": [{ regex: /^[0-9]+$/, mensaje: "Debe ser un número." }],
+        "Ampliaciones": [{ regex: /^[0-9]+$/, mensaje: "Debe ser un número." }],
+        "Confirmado": [
+            { required: true },
+            { regex: /^[01]$/, mensaje: "Solo se permite 0=No o 1=Si." }
+        ]
+    },
+
+    // ────────────────────────────────
+    // TABLA: MATERIAL
+    // ────────────────────────────────
+    material: {
+        "Identificador": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+        ],
+        "Nombre": [{ required: true }],
+        "Tipo": [{ required: true }],
+        "Stock": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[0-9]+$/, mensaje: "Debe ser número." }
+        ],
+        "Código Estudio": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Código inválido." }
+        ]
+    },
+
+    // ────────────────────────────────
+    // TABLA: MATERIAL NECESARIO
+    // ────────────────────────────────
+    material_necesario: {
+        "Identificador": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ],
+        "Identificador material": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ],
+        "Identificador evento": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ],
+        "Cantidad": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[0-9]+$/, mensaje: "Debe ser un número." }
+        ]
+    },
+
+    // ────────────────────────────────
+    // TABLA: NOMBRE TABLAS
+    // ────────────────────────────────
+    nombre_tablas: {
+        "Identificador": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ],
+        "Nombre": [{ required: true }],
+        "Precio": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[0-9]+(\.[0-9]{1,2})?$/, mensaje: "Debe ser un número válido." }
+        ],
+        "Stock": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[0-9]+$/ }
+        ]
+    },
+
+    // ────────────────────────────────
+    // TABLA: NOTA
+    // ────────────────────────────────
+    nota: {
+        "Identificador": [
+            { required: true },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ],
+        "Identificador evento": [
+            { required: true },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ],
+        "Material Necesario": [{ required: true }],
+        "Equipo": [{ required: true }],
+        "Descripcion": [{ required: true }]
+    },
+
+    // ────────────────────────────────
+    // TABLA: USUARIO
+    // ────────────────────────────────
+    usuario: {
+        "Identificador": [
+            { required: true },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ],
+        "Identificador estudio": [
+            { required: true },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ],
+        "Nombres": [
+            { required: true },
+            { regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/, mensaje: "Solo letras." }
+        ],
+        "Primer Apellido": [
+            { required: true },
+            { regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/ }
+        ],
+        "Segundo apellido": [
+            { required: true },
+            { regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/ }
+        ],
+        "Fecha de nacimiento": [
+            { required: true },
+            { custom: v => new Date(v) < new Date(), mensaje: "Debe ser fecha pasada." }
+        ],
+        "Telefono": [
+            { required: true },
+            { regex: /^[0-9]{10}$/, mensaje: "Debe tener 10 dígitos." }
+        ],
+        "Correo": [
+            { required: true },
+            { regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, mensaje: "Correo inválido." }
+        ],
+        "Privilegios": [
+            { required: true },
+            { regex: /^(cliente|administrador)$/i, mensaje: "Debe ser cliente o administrador." }
+        ],
+        "Contraseña": [
+            { required: true },
+            { min: 6, mensaje: "Mínimo 6 caracteres." }
+        ]
+    },
+
+    // ────────────────────────────────
+    // TABLA: USUARIO_EQUIPO
+    // ────────────────────────────────
+    usuario_equipo: {
+        "Identificador": [
+            { required: true },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ],
+        "Identificador equipo": [
+            { required: true },
+            { regex: /^[A-Za-z0-9]{1,6}$/ }
+        ]
     }
 };
+
 
 
 async function enviar(tabla, nombrePublicotabla) {
@@ -67,11 +236,13 @@ async function enviar(tabla, nombrePublicotabla) {
         botonAg.style.display = "block";
 
         const columnas = Object.keys(data[0]);
+        
         const idColumna = columnas[0];
 
         renderHead(tablaElement, tabla);
         renderBody(tablaElement, data, columnas, idColumna, tabla, nombrePublicotabla);
-        renderFormFields(modalEditar, modalAgregar, tabla);
+        renderFormFields(modalEditar, modalAgregar, tabla, columnas);
+
 
         activarValidacionDinamica(modalAgregar, tabla, botonAgregar);
         activarValidacionDinamica(modalEditar, tabla, botonEditar);
@@ -258,7 +429,6 @@ function crearAccionesFila(row, idCol, idValue, tabla, nombrePublico) {
     btnEditar.innerHTML = "<span class='icon'>✏️</span>";
     btnEditar.onclick = () =>
         llenarFormularioEditar(row, idCol, idValue, tabla, nombrePublico);
-
     btnEditar.setAttribute('data-bs-toggle', 'modal');
     btnEditar.setAttribute('data-bs-target', '#modalEditar');
 
@@ -273,8 +443,6 @@ function crearAccionesFila(row, idCol, idValue, tabla, nombrePublico) {
 
     return td;
 }
-
-
 
 function crearCheckboxColumna(col) {
     const divCheck = document.createElement('div');
@@ -338,6 +506,12 @@ function renderBody(tablaElement, data, columnas, idCol, tabla, nombrePublico) {
         tr.appendChild(
             crearAccionesFila(row, idCol, idValue, tabla, nombrePublico)
         );
+        console.log("=== crearAccionesFila ===");
+        console.log("row:", row);                 // objeto completo de la fila
+        console.log("idCol:", idCol);             // nombre de la columna ID
+        console.log("idValue:", idValue);         // valor de la columna ID
+        console.log("tabla:", tabla);             // nombre de la tabla
+        console.log("nombrePublico:", nombrePublico);
 
         tbody.appendChild(tr);
     });
@@ -349,32 +523,33 @@ function renderBody(tablaElement, data, columnas, idCol, tabla, nombrePublico) {
 /* MODALES: CAMPOS FORMULARIO                                     */
 /* ────────────────────────────────────────────────────────────── */
 
-function renderFormFields(modalEditar, modalAgregar, tabla) {
+function renderFormFields(modalEditar, modalAgregar, tabla, columnasBD) {
 
     const columnas = tablasChidas[tabla];
 
-    const esId = 0; // Primera columna es el id
+
     columnas.forEach((col, index) => {
-        console.log(col)
-        modalEditar.appendChild(crearCampo(col, esId));
-        modalAgregar.appendChild(crearCampo(col, esId));
+        const esId = 0; // Primera columna es el id
+        modalEditar.appendChild(crearCampo(col, esId, columnasBD[index]));
+        modalAgregar.appendChild(crearCampo(col, esId, columnasBD[index]));
+        //console.log("Col ->"+col+"index->"+esId);
     });
 }
 
-
-function crearCampo(col, isId = false) {
+//=========================================================================================================================================================
+function crearCampo(col, isId = false, columnaBD) {
     const div = document.createElement('div');
     div.className = isId ? 'd-none' : 'col-md-6';
 
     const label = document.createElement('label');
     label.className = 'form-label fw-semibold';
-    label.textContent = col;
+    label.textContent = col; // nombre bonito para UI
 
     const input = document.createElement('input');
     input.className = 'form-control form-control-modern';
     input.type = isId ? 'hidden' : 'text';
-    input.name = col;
-    input.setAttribute("data-columna", col);
+    input.name = columnaBD;  // name = key publica para las validaciones
+    input.setAttribute("data-columna", col); // data-columna = key real
 
     div.appendChild(label);
     div.appendChild(input);
@@ -382,6 +557,21 @@ function crearCampo(col, isId = false) {
     return div;
 }
 
+
+function llenarFormularioEditar(rowData, idCol, idValue, tabla, nombrePublico) {
+    const modal = document.getElementById("contenidoEditar");
+    const inputs = modal.querySelectorAll("[data-columna]");
+    const columnasBD = Object.keys(rowData);  // ["id", "nombre", "direccion", ...]
+
+    inputs.forEach((input, i) => {
+        input.value = rowData[columnasBD[i]] ?? "";
+        console.log(`Input ${input.getAttribute("data-columna")} <- ${rowData[columnasBD[i]]}`);
+    });
+
+    document.getElementById("newInfo").setAttribute("data-id", idValue);
+    document.getElementById("newInfo").setAttribute("data-id-col", idCol);
+    document.getElementById("newInfo").setAttribute("data-tabla", tabla);
+}
 
 
 

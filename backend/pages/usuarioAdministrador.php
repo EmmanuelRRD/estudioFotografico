@@ -129,7 +129,7 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 			<div class="modal-content shadow-lg rounded-4">
 
 				<div class="modal-header bg-warning text-white rounded-top-4">
-					<h5 class="modal-title">Agregar nuevo producto</h5>
+					<h5 class="modal-title">Agregar</h5>
 					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 				</div>
 
@@ -151,25 +151,20 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 		</div>
 	</div>
 
-
-
 	<!-- Modal: Editar producto -->
 	<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 
 				<div class="modal-header bg-warning text-white">
-					<h5 class="modal-title" id="modalEditarLabel">Editar producto</h5>
+					<h5 class="modal-title" id="modalEditarLabel">Editar</h5>
 					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 				</div>
 
 				<div class="modal-body">
 					<form id="newInfo">
-
 						<div class="row g-3" id="contenidoEditar"></div>
-
 					</form>
-
 
 					<div class="modal-footer navbar-buttons mbr-section-btn ">
 						<button class="btn btn-success display-3">Cancelar</button>
@@ -179,9 +174,6 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 			</div>
 		</div>
 	</div>
-
-
-
 
 	<script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="../../assets/smoothscroll/smooth-scroll.js"></script>
