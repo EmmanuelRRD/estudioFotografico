@@ -16,8 +16,16 @@ const reglasValidacion = {
         "Primer Apellido": { required: true, regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/, mensaje: "Solo letras." },
         "Segundo apellido": { required: true, regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/, mensaje: "Solo letras." },
         "Correo": { required: true, regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, mensaje: "Correo inválido." },
-        "Telefono": { required: true, regex: /^[0-9]{10}$/, mensaje: "Debe contener 10 números." },
-        "Contraseña": { required: true, min: 6, mensaje: "Mínimo 6 caracteres." },
+        "Telefono": [
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[0-9]+$/, mensaje: "Solo números." },
+            { regex: /^[0-9]{10}$/, mensaje: "Debe tener 10 dígitos." }
+        ],
+        "Contraseña": [
+            { min: 6, mensaje: "Mínimo 6 caracteres." },
+            { regex: /[A-Z]/, mensaje: "Debe tener una mayúscula." },
+            { regex: /[0-9]/, mensaje: "Debe tener un número." }
+        ],
         "Fecha de nacimiento": {
             required: true,
             custom: (v) => new Date(v) < new Date(),
@@ -106,39 +114,39 @@ function activarValidacionDinamica(modal, tabla, botonConfirmar) {
     verificarFormulario(estado, botonConfirmar);
 }
 
-function validarInput(input, columna, regla, estado, error) {
+function validarInput(input, columna, reglas, estado, error) {
     const valor = input.value.trim();
 
-    if (!regla) {
+    // si no hay reglas → válido
+    if (!reglas) {
         estado[columna] = true;
         return;
     }
 
-    // Requerido
-    if (regla.required && valor === "") {
-        marcarError("Este campo es obligatorio");
-        return;
+    // convertir a array si solo pusieron un objeto
+    if (!Array.isArray(reglas)) reglas = [reglas];
+
+    // probar todas las reglas
+    for (const regla of reglas) {
+
+        if (regla.required && valor === "") {
+            return marcarError(regla.mensaje);
+        }
+
+        if (regla.regex && !regla.regex.test(valor)) {
+            return marcarError(regla.mensaje);
+        }
+
+        if (regla.min && valor.length < regla.min) {
+            return marcarError(regla.mensaje);
+        }
+
+        if (regla.custom && !regla.custom(valor)) {
+            return marcarError(regla.mensaje);
+        }
     }
 
-    // Expresión regular
-    if (regla.regex && !regla.regex.test(valor)) {
-        marcarError(regla.mensaje);
-        return;
-    }
-
-    // Longitud mínima
-    if (regla.min && valor.length < regla.min) {
-        marcarError(regla.mensaje);
-        return;
-    }
-
-    // Validación personalizada
-    if (regla.custom && !regla.custom(valor)) {
-        marcarError(regla.mensaje);
-        return;
-    }
-
-    // EXCELENTE → válido
+    // Si ninguna regla falló → válido
     input.style.borderColor = "green";
     error.style.display = "none";
     estado[columna] = true;
@@ -151,6 +159,7 @@ function validarInput(input, columna, regla, estado, error) {
         estado[columna] = false;
     }
 }
+
 
 function verificarFormulario(estado, boton) {
     const todoValido = Object.values(estado).every(v => v === true);
