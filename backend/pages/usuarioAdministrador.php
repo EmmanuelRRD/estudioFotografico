@@ -101,7 +101,7 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 
 			<div class="separador_consultas w-100 d-flex justify-content-start">
 				<input class="form-control me-2" type="hidden" placeholder="Buscar" aria-label="Search" id="search_id">
-				<button class="btn btn-light" id="clear_btn" type="button">✖</button>
+				<button class="btn btn-light" id="clear_btn" type="button" style="display: none !important;">✖</button>
 			</div>
 
 			
@@ -171,7 +171,7 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 				</div>
 
 				<div class="modal-footer navbar-buttons mbr-section-btn ">
-					<button class="btn btn-success display-3" data-bs-dismiss="modal">Cancelar</button>
+					<button class="btn btn-info display-3" data-bs-dismiss="modal">Cancelar</button>
 					<button class="btn btn-success display-3" id="btnActualizar">Guardar cambios</button>
 				</div>
 			</div>
