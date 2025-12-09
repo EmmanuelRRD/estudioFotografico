@@ -128,7 +128,7 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 		<div class="modal-dialog modal-dialog-centered modal-fit">
 			<div class="modal-content shadow-lg rounded-4">
 
-				<div class="modal-header bg-warning text-white rounded-top-4">
+				<div class="modal-header bg-success text-white rounded-top-4">
 					<h5 class="modal-title">Agregar</h5>
 					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 				</div>
@@ -141,9 +141,9 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 					</form>
 				</div>
 
-				<div class="modal-footer">
-					<button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-					<button class="btn btn-warning text-white" id="btn_creador">Agregar</button>
+				<div class="modal-footer navbar-buttons mbr-section-btn ">
+					<button class="btn btn-info display-3" data-bs-dismiss="modal">Cancelar</button>
+					<button class="btn btn-success display-3" id="btn_creador">Agregar</button>
 				</div>
 
 			</div>
@@ -155,20 +155,20 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 
-				<div class="modal-header bg-warning text-white">
+				<div class="modal-header bg-success text-white">
 					<h5 class="modal-title" id="modalEditarLabel">Editar</h5>
-					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+					<button type="button" class="btn-info btn-close-white" data-bs-dismiss="modal"></button>
 				</div>
 
 				<div class="modal-body">
 					<form id="newInfo">
 						<div class="row g-3" id="contenidoEditar"></div>
 					</form>
+				</div>
 
-					<div class="modal-footer navbar-buttons mbr-section-btn ">
-						<button class="btn btn-success display-3">Cancelar</button>
-						<button class="btn btn-success display-3" id="btnActualizar">Guardar cambios</button>
-					</div>
+				<div class="modal-footer navbar-buttons mbr-section-btn ">
+					<button class="btn btn-success display-3" data-bs-dismiss="modal">Cancelar</button>
+					<button class="btn btn-success display-3" id="btnActualizar">Guardar cambios</button>
 				</div>
 			</div>
 		</div>

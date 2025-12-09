@@ -565,19 +565,37 @@ function crearCampo(col, isId = false, columnaBD) {
 }
 
 function llenarFormularioEditar(rowData, idCol, idValue, tabla, nombrePublico) {
+
     const modal = document.getElementById("contenidoEditar");
     const inputs = modal.querySelectorAll("[data-columna]");
-    const columnasBD = Object.keys(rowData);  // ["id", "nombre", "direccion", ...]
+    const columnasBD = Object.keys(rowData);  
+    const botonEditar = document.getElementById("btnActualizar");
 
     inputs.forEach((input, i) => {
         input.value = rowData[columnasBD[i]] ?? "";
-        console.log(`Input ${input.getAttribute("data-columna")} <- ${rowData[columnasBD[i]]}`);
     });
 
-    document.getElementById("newInfo").setAttribute("data-id", idValue);
-    document.getElementById("newInfo").setAttribute("data-id-col", idCol);
-    document.getElementById("newInfo").setAttribute("data-tabla", tabla);
+    // Guardar info del ID
+    const newInfo = document.getElementById("newInfo");
+    newInfo.setAttribute("data-id", idValue);
+    newInfo.setAttribute("data-id-col", idCol);
+    newInfo.setAttribute("data-tabla", tabla);
+
+    // 🔥 Fuerza la validación automática de cada input
+    const reglas = reglasValidacion[tabla] || {};
+    let estado = {};
+
+    inputs.forEach(input => {
+        const columnaUI = input.getAttribute("data-columna"); 
+        estado[columnaUI] = false;
+
+        // Buscar mensaje de error al lado del input
+        const error = input.nextElementSibling;
+
+        // Validar inmediatamente
+        validarInput(input, columnaUI, reglas[columnaUI], estado, error);
+    });
+
+    // Activar/desactivar botón según validación
+    verificarFormulario(estado, botonEditar);
 }
-
-
-
