@@ -1,7 +1,7 @@
 const tablasChidas = {
     "equipo_trabajo": ["Identificador", "descripcion"],
     "estudio": ["Identificador", "Nombre", "Dirección", "Tipo Entregas", "Encargado", "Jefe"],
-    "evento": ["Identificador", "Fecha evento", "Paquete", "Fotos chicas", "Fotos grandes", "Ampliaciones", "Confirmado"],
+    "evento": ["Identificador", "Fecha evento", "Paquete", "Fotos chicas", "Fotos grandes", "Ampliaciones", "Confirmado", "Identificador evento"],
     "material": ["Identificador", "Nombre", "Tipo", "Stock", "Código Estudio"],
     "material_necesario": ["Identificador", "Identificador material", "Identificador evento", "Cantidad"],
     "nombre_tablas": ["Identificador", "Nombre", "Precio", "Stock"],
@@ -68,6 +68,10 @@ const reglasValidacion = {
         "Confirmado": [
             { required: true },
             { regex: /^[01]$/, mensaje: "Solo se permite 0=No o 1=Si." }
+        ],
+        "Identificador evento":[
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ]
     },
 
@@ -97,7 +101,7 @@ const reglasValidacion = {
     material_necesario: {
         "Identificador": [
             { required: true, mensaje: "Campo obligatorio." },
-             { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
         "Identificador material": [
             { required: true, mensaje: "Campo obligatorio." },
@@ -119,7 +123,7 @@ const reglasValidacion = {
     nombre_tablas: {
         "Identificador": [
             { required: true, mensaje: "Campo obligatorio." },
-             { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
         "Nombre": [{ required: true }],
         "Precio": [
@@ -137,8 +141,8 @@ const reglasValidacion = {
     // ────────────────────────────────
     nota: {
         "Identificador": [
-            { required: true , mensaje: "Campo obligatorio."},
-             { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+            { required: true, mensaje: "Campo obligatorio." },
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
         "Identificador evento": [
             { required: true },
@@ -155,18 +159,18 @@ const reglasValidacion = {
     usuario: {
         "Identificador": [
             { required: true },
-             { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
         "Identificador estudio": [
             { required: true },
-             { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
+            { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
         "Nombres": [
             { required: true },
             { regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/, mensaje: "Solo letras." }
         ],
         "Primer Apellido": [
-            { required: true , mensaje: "Campo obligatorio."},
+            { required: true, mensaje: "Campo obligatorio." },
             { regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/ }
         ],
         "Segundo apellido": [
@@ -174,23 +178,23 @@ const reglasValidacion = {
             { regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/ }
         ],
         "Fecha de nacimiento": [
-            { required: true , mensaje: "Campo obligatorio."},
+            { required: true, mensaje: "Campo obligatorio." },
             { custom: v => new Date(v) < new Date(), mensaje: "Debe ser fecha pasada." }
         ],
         "Telefono": [
-            { required: true , mensaje: "Campo obligatorio."},
+            { required: true, mensaje: "Campo obligatorio." },
             { regex: /^[0-9]{10}$/, mensaje: "Debe tener 10 dígitos." }
         ],
         "Correo": [
-            { required: true , mensaje: "Campo obligatorio."},
+            { required: true, mensaje: "Campo obligatorio." },
             { regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, mensaje: "Correo inválido." }
         ],
         "Privilegios": [
-            { required: true , mensaje: "Campo obligatorio."},
+            { required: true, mensaje: "Campo obligatorio." },
             { regex: /^(cliente|administrador)$/i, mensaje: "Debe ser cliente o administrador." }
         ],
         "Contraseña": [
-            { required: true , mensaje: "Campo obligatorio."},
+            { required: true, mensaje: "Campo obligatorio." },
             { min: 6, mensaje: "Mínimo 6 caracteres." }
         ]
     },
@@ -234,7 +238,7 @@ async function enviar(tabla, nombrePublicotabla) {
         botonAg.style.display = "block";
 
         const columnas = Object.keys(data[0]);
-        
+
         const idColumna = columnas[0];
 
         renderHead(tablaElement, tabla);
@@ -369,7 +373,7 @@ function configurarEncabezado(tabla, nombrePublicotabla) {
     titulo.innerHTML = nombrePublicotabla.toUpperCase();
     titulo.style.display = "block";
 
-    document.getElementById('btn_creador').onclick = () => crear(tabla,nombrePublicotabla);
+    document.getElementById('btn_creador').onclick = () => crear(tabla, nombrePublicotabla);
 }
 
 /* ────────────────────────────────────────────────────────────── */
