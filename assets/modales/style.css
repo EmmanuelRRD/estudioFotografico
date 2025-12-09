@@ -1,0 +1,43 @@
+/* --- Estilo general del modal (glass-style) --- */
+.modern-modal {
+    border-radius: 18px;
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.70);
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.45);
+}
+
+/* --- Tamaño del modal y comportamiento --- */
+.modal-dialog.modal-md {
+    max-width: 500px;
+}
+
+.modal-body-scroll {
+    max-height: 55vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* --- Inputs estilo moderno --- */
+.form-control-modern {
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.15);
+    background: rgba(255,255,255,0.6);
+    border-radius: 12px;
+    padding: 10px 14px;
+    transition: 0.25s;
+    font-size: 0.95rem;
+    backdrop-filter: blur(4px);
+}
+
+.form-control-modern:focus {
+    border-color: #f7b500;
+    box-shadow: 0 0 0 3px rgba(247,181,0,0.25);
+    background: rgba(255,255,255,0.9);
+}
+
+/* --- Etiquetas más elegantes --- */
+.form-label {
+    font-weight: 600;
+    color: #333;
+}

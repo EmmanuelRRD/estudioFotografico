@@ -34,9 +34,8 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 	</noscript>
 	<link rel="preload" as="style" href="../../assets/mobirise/css/mbr-additional.css?v=K8VXrR">
 	<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css?v=K8VXrR" type="text/css">
-
-
-
+	<link rel="stylesheet" href="assets/tablas/styleTablas.css">
+	<link rel="stylesheet" href="assets/modales/style.css">
 
 </head>
 
@@ -117,57 +116,72 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 		</div>
 		<!-- Tabla de productos -->
 		<div class="table-responsive shadow-sm bg-white rounded-5" style="max-height: 65vh; overflow-y: auto;">
-			<table class="table table-hover align-middle mb-0" id="tabla-contenido">
+			<table id="tabla-contenido" class="table table-bordered"></table>
 
-			</table>
 		</div>
 	</div>
 
 	<!--========================== Aqui empiezan los Modales ======================= -->
 
-	<!-- Modal: Agregar  -->
-	<div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header bg-warning text-white">
-					<h5 class="modal-title" id="modalAgregarLabel">Agregar nuevo producto</h5>
+	<!-- Modal: Agregar -->
+	<div class="modal fade" id="modalAgregar" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-fit">
+			<div class="modal-content shadow-lg rounded-4">
+
+				<div class="modal-header bg-warning text-white rounded-top-4">
+					<h5 class="modal-title">Agregar nuevo producto</h5>
 					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 				</div>
+
 				<div class="modal-body">
 					<form id="addInfo">
-						<div class="row g-3" id="contenidoAgregar">
 
-						</div>
+						<!-- ⬇️ Campos generados dinámicamente -->
+						<div class="row g-3" id="contenidoAgregar"></div>
+
 					</form>
-					<button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
-					<button class="btn btn-warning text-white mt-3" id="btn_creador" onclick="">Agregar</button>
-
 				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+					<button class="btn btn-warning text-white" id="btn_creador">Agregar</button>
+				</div>
+
 			</div>
 		</div>
 	</div>
+
+
 
 	<!-- Modal: Editar producto -->
 	<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
+
 				<div class="modal-header bg-warning text-white">
 					<h5 class="modal-title" id="modalEditarLabel">Editar producto</h5>
 					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 				</div>
+
 				<div class="modal-body">
 					<form id="newInfo">
-						<div class="row g-3" id="contenidoEditar">
 
-						</div>
+						<div class="row g-3" id="contenidoEditar"></div>
+
 					</form>
-					<button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
-					<button class="btn btn-warning text-white mt-3" id="btnActualizar">Guardar cambios</button>
 
+
+					<div class="modal-footer navbar-buttons mbr-section-btn ">
+						<button class="btn btn-success display-3">Cancelar</button>
+						<button class="btn btn-success display-3" id="btnActualizar">Guardar cambios</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+
 
 	<script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="../../assets/smoothscroll/smooth-scroll.js"></script>

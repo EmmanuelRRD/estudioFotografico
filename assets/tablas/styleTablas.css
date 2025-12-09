@@ -1,0 +1,29 @@
+.table-responsive table {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+
+#tabla-contenido {
+    border-collapse: collapse;
+}
+
+#tabla-contenido thead th {
+    background: rgb(255, 202, 103);
+    border-bottom: 2px solid rgba(255,255,255,0.5);
+    font-weight: 700;
+}
+
+#tabla-contenido tbody tr {
+    background: rgba(255,255,255,0.3);
+    transition: 0.25s;
+}
+
+#tabla-contenido tbody tr:hover {
+    background: rgba(255, 186, 59, 0.3);
+}
+
+#tabla-contenido td {
+    padding: 15px;
+}
