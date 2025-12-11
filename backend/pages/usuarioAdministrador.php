@@ -67,7 +67,7 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 						<li class="nav-item dropdown open">
 							<a class="nav-link link text-white dropdown-toggle show display-4"
 								href="#" aria-expanded="true" data-toggle="dropdown-submenu" data-bs-toggle="dropdown"
-								data-bs-auto-close="outside">Tablas</a>
+								data-bs-auto-close="outside">Administrar Datos</a>
 							<div class="dropdown-menu show" aria-labelledby="dropdown-441" data-bs-popper="none">
 
 								<button class="text-white dropdown-item display-4" type="button" onclick="enviar('equipo_trabajo','Equipos de trabajo')">Equipos de trabajo</button>
@@ -82,11 +82,10 @@ if (!isset($_SESSION['usuario_autenticado'])) {
 						<li class="nav-item">
 					</ul>
 					<form action="/logout" method="post">
-						<div class="navbar-buttons mbr-section-btn"><button type="submit" class="btn btn-success display-4">Cerrar sesión</button></div>
+						<div class="navbar-buttons mbr-section-btn"><button type="submit" id="btn_cerrar" class="btn btn-success display-4">Cerrar sesión</button></div>
 					</form>
 
-				</div>
-			</div>
+				</div></div>
 		</nav>
 	</section>
 	<!-- /Navbar-->

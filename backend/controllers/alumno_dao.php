@@ -43,10 +43,6 @@ class AlumnoDAO
         }
     }
 
-
-
-
-
     //------------ Eliminar -----------
     public function eliminarRegistro($key, $id, $tabla)
     {
@@ -155,17 +151,47 @@ class AlumnoDAO
         return $datos;
     }
 
-
-    //------------ Mostrar Fotografos Disponibles -----------
-    public function mostrarFotografos()
+    public function mostrarEspecificoLimitado($tabla, $datoAMostrar)
     {
-        /*
-        SELECT a.id, a.valor, b.dato
-        FROM tablaA a
-        INNER JOIN tablaB b ON a.id = b.id
-        WHERE a.valor = 'B';
+        $con = $this->conexion->getConexion();
 
-        //Esta consulta es estatica ya que todos los clientes deben de 
-        */
+        // Sanitizar nombres (solo evitar inyección en nombres, no se puede usar bind_param para eso)
+        $tabla = mysqli_real_escape_string($con, $tabla);
+        $datoAMostrar   = mysqli_real_escape_string($con, $datoAMostrar);
+
+        // Usar consulta preparada
+        $sql = "SELECT $datoAMostrar FROM $tabla";
+        $stmt = $con->prepare($sql);
+        $stmt->execute();
+
+        $res = $stmt->get_result();
+        $datos = $res->fetch_all(MYSQLI_ASSOC);
+
+        $stmt->close();
+        return $datos;
+    }
+
+        public function busquedaPro($tabla,$limitador, $key, $id)
+    {
+        $con = $this->conexion->getConexion();
+
+        // Sanitizar nombres (solo evitar inyección en nombres, no se puede usar bind_param para eso)
+        $tabla = mysqli_real_escape_string($con, $tabla);
+        $key   = mysqli_real_escape_string($con, $key);
+
+        // LIKE %id%
+        $like = "%" . $id . "%";
+
+        // Usar consulta preparada
+        $sql = "SELECT $limitador FROM $tabla WHERE $key LIKE ?";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("s", $like);
+        $stmt->execute();
+
+        $res = $stmt->get_result();
+        $datos = $res->fetch_all(MYSQLI_ASSOC);
+
+        $stmt->close();
+        return $datos;
     }
 }

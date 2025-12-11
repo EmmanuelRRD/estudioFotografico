@@ -1,13 +1,72 @@
 const tablasChidas = {
     "equipo_trabajo": ["Identificador", "descripcion"],
-    "estudio": ["Identificador", "Nombre", "Dirección", "Tipo Entregas", "Encargado", "Jefe"],
-    "evento": ["Identificador", "Fecha evento", "Paquete", "Fotos chicas", "Fotos grandes", "Ampliaciones", "Confirmado", "Identificador evento"],
-    "material": ["Identificador", "Nombre", "Tipo", "Stock", "Código Estudio"],
+    "estudio": [
+        "Identificador",
+        "Nombre",
+        "Dirección",
+        "Terminos",
+        {
+            col: "Encargado",
+            tipo: "select",
+            origen: "api",
+            endpoint: "http://localhost/backend/controllers/busqueda_limitada_filtrada.php?tabla=usuario&limitador=id_usuario&key=tipo_usuario&id=empleado"
+        },
+        {//http://localhost/backend/controllers/busqueda_pro.php?tabla=equipo_trabajo&ver=id_equipo
+            col: "Jefe",
+            tipo: "select",
+            origen: "api",
+            endpoint: "http://localhost/backend/controllers/busqueda_limitada_filtrada.php?tabla=usuario&limitador=id_usuario&key=tipo_usuario&id=admin"
+        }
+    ],
+    "evento": ["Identificador", "Fecha evento", "Paquete", "Fotos chicas", "Fotos grandes", "Ampliaciones", "Confirmado",
+        {
+            col: "Identificador equipo",
+            tipo: "select",
+            origen: "api",
+            endpoint: "http://localhost/backend/controllers/busqueda_pro.php?tabla=equipo_trabajo&ver=id_equipo"
+        }
+    ],//http://localhost/backend/controllers/busqueda_pro.php?tabla=estudio&ver=id_estudio
+    "material": ["Identificador", "Nombre", "Tipo", "Stock",
+        {
+            col: "Identificador estudio",
+            tipo: "select",
+            origen: "api",
+            endpoint: "http://localhost/backend/controllers/busqueda_pro.php?tabla=estudio&ver=id_estudio"
+        }
+    ],
     "material_necesario": ["Identificador", "Identificador material", "Identificador evento", "Cantidad"],
     "nombre_tablas": ["Identificador", "Nombre", "Precio", "Stock"],
-    "nota": ["Identificador", "Identificador evento", "Material Necesario", "Equipo", "Descripcion"],
-    "usuario": ["Identificador", "Identificador estudio", "Nombres", "Primer Apellido", "Segundo apellido", "Fecha de nacimiento", "Telefono", "Correo", "Privilegios", "Contraseña"],
+    "nota": [
+        "Identificador",
+        {
+            col: "Identificador evento",
+            tipo: "select",
+            origen: "api",
+            endpoint: "http://localhost/backend/controllers/busqueda_pro.php?tabla=evento&ver=id_evento"
+        },
+        {
+            col: "Material necesario",
+            tipo: "select",
+            origen: "api",
+            endpoint: "http://localhost/backend/controllers/busqueda_pro.php?tabla=material_necesario&ver=id_detalle"
+        },
+        {
+            col: "Equipo",
+            tipo: "select",
+            origen: "api",
+            endpoint: "http://localhost/backend/controllers/busqueda_pro.php?tabla=equipo_trabajo&ver=id_equipo"
+        },
+        "Descripcion"],
+    "usuario": ["Identificador",
+        {
+            col: "Equipo",
+            tipo: "select",
+            origen: "api",
+            endpoint: "http://localhost/backend/controllers/busqueda_pro.php?tabla=estudio&ver=id_estudio"
+        }
+        , "Nombres", "Primer Apellido", "Segundo apellido", "Fecha de nacimiento", "Telefono", "Correo", "Privilegios", "Contraseña"],
     "usuario_equipo": ["Identificador", "Identificador equipo"]
+
 };
 
 const reglasValidacion = {
@@ -22,7 +81,7 @@ const reglasValidacion = {
         ],
         "descripcion": [
             { required: true, mensaje: "Campo obligatorio." },
-            { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo letras." }
+            { regex: /^[A-Za-z0-9]$/, mensaje: "solo valores alfanumericos" }
         ]
     },
 
@@ -35,12 +94,11 @@ const reglasValidacion = {
             { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
         "Nombre": [{ required: true, mensaje: "Campo obligatorio." },
-        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo letras." }
+        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo se permiten letras." },
+        { min: 2, mensaje: "Más de una letra." }
         ],
         "Dirección": [{ required: true, mensaje: "Campo obligatorio." }],
-        "Tipo Entregas": [{ required: true, mensaje: "Campo obligatorio." },
-        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo letras." }
-        ],
+        "Terminos": [{ required: true, mensaje: "Campo obligatorio." }],
         "Encargado": [{ required: true, mensaje: "Campo obligatorio." },
         { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
@@ -59,12 +117,24 @@ const reglasValidacion = {
         ],
         "Fecha evento": [
             { required: true, mensaje: "Campo obligatorio." },
-            { custom: v => new Date(v) >= new Date("2000-01-01"), mensaje: "Fecha inválida." }
+            {
+                custom: v => /^\d{4}-\d{2}-\d{2}$/.test(v) && new Date(v) >= new Date("2000-01-01"),
+                mensaje: "Formato necesario YYYY-MM-DD Por ejemplo >= 2000-01-01."
+            }
         ],
-        "Paquete": [{ required: true }],
-        "Fotos chicas": [{ regex: /^[0-9]+$/, mensaje: "Debe ser un número." }],
-        "Fotos grandes": [{ regex: /^[0-9]+$/, mensaje: "Debe ser un número." }],
-        "Ampliaciones": [{ regex: /^[0-9]+$/, mensaje: "Debe ser un número." }],
+        "Paquete": [{ required: true, mensaje: "Campo obligatorio." }],
+        "Fotos chicas": [
+            { required: true, mensaje: "Por lo menos un número" },
+            { regex: /^[0-9]+$/, mensaje: "Debe ser un número." }
+        ],
+        "Fotos grandes": [
+            { required: true, mensaje: "Por lo menos un número" },
+            { regex: /^[0-9]+$/, mensaje: "Debe ser un número." }
+        ],
+        "Ampliaciones": [
+            { required: true, mensaje: "Por lo menos un número" },
+            { regex: /^[0-9]+$/, mensaje: "Debe ser un número." }
+        ],
         "Confirmado": [
             { required: true },
             { regex: /^[01]$/, mensaje: "Solo se permite 0=No o 1=Si." }
@@ -83,8 +153,14 @@ const reglasValidacion = {
             { required: true, mensaje: "Campo obligatorio." },
             { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
-        "Nombre": [{ required: true }],
-        "Tipo": [{ required: true }],
+        "Nombre": [{ required: true, mensaje: "Campo obligatorio." },
+        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo se permiten letras." },
+        { min: 3, mensaje: "Nombre  muy corto" }
+        ],
+        "Tipo": [{ required: true, mensaje: "Campo obligatorio." },
+        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo se permiten letras." },
+        { min: 3, mensaje: "Descripcion muy corta" }
+        ],
         "Stock": [
             { required: true, mensaje: "Campo obligatorio." },
             { regex: /^[0-9]+$/, mensaje: "Debe ser número." }
@@ -165,21 +241,24 @@ const reglasValidacion = {
             { required: true },
             { regex: /^[A-Za-z0-9]{1,6}$/, mensaje: "Máximo 6 caracteres alfanuméricos." }
         ],
-        "Nombres": [
-            { required: true },
-            { regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/, mensaje: "Solo letras." }
+        "Nombres": [{ required: true, mensaje: "Campo obligatorio." },
+        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo se permiten letras." },
+        { min: 3, mensaje: "Nombre  muy corto" }
         ],
-        "Primer Apellido": [
-            { required: true, mensaje: "Campo obligatorio." },
-            { regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/ }
+        "Primer Apellido": [{ required: true, mensaje: "Campo obligatorio." },
+        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo se permiten letras." },
+        { min: 3, mensaje: "Nombre  muy corto" }
         ],
-        "Segundo apellido": [
-            { required: false },
-            { regex: /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/ }
+        "Segundo apellido": [{ required: true, mensaje: "Campo obligatorio." },
+        { regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, mensaje: "Solo se permiten letras." },
+        { min: 3, mensaje: "Nombre  muy corto" }
         ],
         "Fecha de nacimiento": [
             { required: true, mensaje: "Campo obligatorio." },
-            { custom: v => new Date(v) < new Date(), mensaje: "Debe ser fecha pasada." }
+            {
+                custom: v => /^\d{4}-\d{2}-\d{2}$/.test(v) && new Date(v) >= new Date("2000-01-01"),
+                mensaje: "Formato necesario YYYY-MM-DD Por ejemplo >= 2000-01-01."
+            }
         ],
         "Telefono": [
             { required: true, mensaje: "Campo obligatorio." },
@@ -260,6 +339,9 @@ async function consultar(url, tabla, nombrePublicoTabla) {
             tabla,
             columnas
         );
+
+        llenarSelectsDinamicos(document.getElementById("contenidoAgregar"));
+        llenarSelectsDinamicos(document.getElementById("contenidoEditar"));
 
         activarValidacionDinamica(
             document.getElementById("contenidoAgregar"),
@@ -358,6 +440,7 @@ function validarInput(input, columna, reglas, estado, error) {
 
 function verificarFormulario(estado, boton) {
     const todoValido = Object.values(estado).every(v => v === true);
+    console.log("Deshabilitando botón:", boton);
     boton.disabled = !todoValido;
     boton.style.opacity = todoValido ? "1" : "0.6";
 }
@@ -406,7 +489,7 @@ function renderHead(tablaElement, tabla, columnasBD) {
     const thead = document.createElement('thead');
     const tr = document.createElement('tr');
 
-    const columnas = tablasChidas[tabla];  // ahora sí existe
+    const columnas = tablasChidas[tabla];
 
     if (!columnas) {
         console.error("No existen columnas para la tabla:", tabla);
@@ -416,6 +499,9 @@ function renderHead(tablaElement, tabla, columnasBD) {
     columnas.forEach((col, index) => {
         const th = document.createElement('th');
 
+        // Normalizar nombre visible
+        const nombreUI = (typeof col === "object") ? col.col : col;
+
         const divCheck = document.createElement('div');
         divCheck.className = 'd-flex justify-content-center align-items-center gap-1';
 
@@ -423,12 +509,17 @@ function renderHead(tablaElement, tabla, columnasBD) {
         check.type = 'checkbox';
         check.className = 'checkbox-modern';
         check.name = "columnas";
-        check.value = col;                  // nombre bonito para UI
-        check.dataset.columnaBd = columnasBD[index];   // nombre REAL de BD
+
+        // Ahora sí el nombre bonito, no el objeto
+        check.value = nombreUI;
+
+        // Nombre REAL de BD
+        check.dataset.columnaBd = columnasBD[index];
+
         check.addEventListener('change', () => manejarCambioCheckbox(check));
 
         const label = document.createElement('span');
-        label.textContent = col;
+        label.textContent = nombreUI;
 
         divCheck.appendChild(check);
         divCheck.appendChild(label);
@@ -443,6 +534,7 @@ function renderHead(tablaElement, tabla, columnasBD) {
     thead.appendChild(tr);
     tablaElement.appendChild(thead);
 }
+
 
 
 function crearAccionesFila(row, idCol, idValue, tabla, nombrePublico) {
@@ -574,19 +666,56 @@ function renderFormFields(modalEditar, modalAgregar, tabla, columnasBD) {
 //=========================================================================================================================================================
 //=========================================================================================================================================================
 //=========================================================================================================================================================
-function crearCampo(col, isId = false, columnaBD) {
+function crearCampo(colDef, isId = false, columnaBD) {
+
+    const esSelect = typeof colDef === "object";
+    const nombreUI = esSelect ? colDef.col : colDef;
+
     const div = document.createElement('div');
     div.className = isId ? 'd-none' : 'col-md-6';
 
     const label = document.createElement('label');
     label.className = 'form-label fw-semibold';
-    label.textContent = col; // nombre bonito para UI
+    label.textContent = nombreUI;
 
-    const input = document.createElement('input');
-    input.className = 'form-control form-control-modern';
-    input.type = isId ? 'hidden' : 'text';
-    input.name = columnaBD;  // name = key publica para las validaciones
-    input.setAttribute("data-columna", col); // data-columna = key real
+    let input;
+
+    if (esSelect && colDef.tipo === "select") {
+        input = document.createElement('select');
+        input.className = "form-control form-control-modern";
+        input.name = columnaBD;
+        input.setAttribute("data-columna", nombreUI);
+
+        // placeholder temporal
+        const tmp = document.createElement("option");
+        tmp.textContent = "Cargando...";
+        tmp.disabled = true;
+        tmp.selected = true;
+        input.appendChild(tmp);
+
+        // si es select normal (con array local)
+        if (colDef.opciones) {
+            input.innerHTML = "";
+            colDef.opciones.forEach(opt => {
+                const o = document.createElement("option");
+                o.value = opt;
+                o.textContent = opt;
+                input.appendChild(o);
+            });
+        }
+
+        // si requiere API → marcar el select para llenarse después
+        if (colDef.origen === "api" && colDef.endpoint) {
+            input.dataset.api = colDef.endpoint;
+        }
+
+    } else {
+        input = document.createElement('input');
+        input.className = 'form-control form-control-modern';
+        input.type = isId ? 'hidden' : 'text';
+        input.name = columnaBD;
+        input.setAttribute("data-columna", nombreUI);
+    }
 
     div.appendChild(label);
     div.appendChild(input);
@@ -594,38 +723,129 @@ function crearCampo(col, isId = false, columnaBD) {
     return div;
 }
 
-function llenarFormularioEditar(rowData, idCol, idValue, tabla, nombrePublico) {
+async function llenarSelectsDinamicos(modal) {
+    const selects = modal.querySelectorAll("select[data-api]");
 
+    for (const select of selects) {
+        try {
+            const url = select.dataset.api.replace(/&amp;/g, "&");
+            //const url = select.dataset.api;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            select.innerHTML = ""; // limpiar opciones
+
+            data.forEach(item => {
+                const o = document.createElement("option");
+
+                // Detectar automáticamente el primer campo del objeto
+                const llave = Object.keys(item)[0];
+                const valor = item[llave];
+
+                o.value = valor;
+                o.textContent = valor;
+
+                select.appendChild(o);
+            });
+
+        } catch (err) {
+            console.error("Error cargando opciones desde API:", err);
+            select.innerHTML = "<option>Error al cargar datos</option>";
+        }
+    }
+}
+
+
+async function llenarFormularioEditar(rowData, idCol, idValue, tabla, nombrePublico) {
     const modal = document.getElementById("contenidoEditar");
     const inputs = modal.querySelectorAll("[data-columna]");
-    const columnasBD = Object.keys(rowData);
     const botonEditar = document.getElementById("btnActualizar");
 
-    inputs.forEach((input, i) => {
-        input.value = rowData[columnasBD[i]] ?? "";
-    });
-
-    // Guardar info del ID
+    // Identificador
     const newInfo = document.getElementById("newInfo");
     newInfo.setAttribute("data-id", idValue);
     newInfo.setAttribute("data-id-col", idCol);
     newInfo.setAttribute("data-tabla", tabla);
 
-    // 🔥 Fuerza la validación automática de cada input
     const reglas = reglasValidacion[tabla] || {};
     let estado = {};
 
-    inputs.forEach(input => {
+    for (const input of inputs) {
         const columnaUI = input.getAttribute("data-columna");
         estado[columnaUI] = false;
 
-        // Buscar mensaje de error al lado del input
-        const error = input.nextElementSibling;
+        const valor = rowData[input.name] ?? rowData[columnaUI] ?? "";
+
+        if (input.tagName.toLowerCase() === "select" && input.dataset.api) {
+            // Llenar select desde API y esperar a que termine
+            await llenarSelectDinamico(input);
+
+            // Asignar valor solo después de que existan las opciones
+            if (valor && Array.from(input.options).some(o => o.value === valor)) {
+                input.value = valor;
+            } else if (valor) {
+                // Si el valor no está en las opciones, lo agregamos
+                const option = document.createElement("option");
+                option.value = valor;
+                option.textContent = valor;
+                option.selected = true;
+                input.appendChild(option);
+            }
+        } else {
+            input.value = valor;
+        }
 
         // Validar inmediatamente
+        const error = input.nextElementSibling;
         validarInput(input, columnaUI, reglas[columnaUI], estado, error);
-    });
+    }
 
-    // Activar/desactivar botón según validación
     verificarFormulario(estado, botonEditar);
 }
+
+/**
+ * Función auxiliar para llenar un <select> desde su data-api
+ */
+async function llenarSelectDinamico(select) {
+    try {
+        // Guardar el valor actualmente seleccionado
+        const valorActual = select.value;
+
+        // Obtener URL del API
+        const url = select.dataset.api.replace(/&amp;/g, "&");
+        const res = await fetch(url);
+        const data = await res.json();
+
+        // Limpiar opciones
+        
+        data.forEach(item => {
+            const llave = Object.keys(item)[0];  // valor
+            const valor = item[llave];
+
+            const option = document.createElement("option");
+            option.value = valor;
+            option.textContent = valor;
+
+            // Si el valor coincide con el previamente seleccionado, marcarlo
+            if (valor === valorActual) {
+                option.selected = true;
+            }
+
+            select.appendChild(option);
+        });
+
+        // Si el valor anterior no existía en las opciones, crear uno temporal
+        if (valorActual && !Array.from(select.options).some(o => o.value === valorActual)) {
+            const option = document.createElement("option");
+            option.value = valorActual;
+            option.textContent = valorActual;
+            option.selected = true;
+            select.appendChild(option);
+        }
+
+    } catch (err) {
+        console.error("Error cargando opciones del select:", err);
+        select.innerHTML = "<option>Error al cargar datos</option>";
+    }
+}
+
